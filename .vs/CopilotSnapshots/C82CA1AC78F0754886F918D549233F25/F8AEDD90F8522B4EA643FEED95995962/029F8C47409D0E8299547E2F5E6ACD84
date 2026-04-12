@@ -1,0 +1,6 @@
+﻿export const appParams = {
+  appId: process.env.VITE_APP_ID || 'local-app-id',
+  token: process.env.VITE_APP_TOKEN || '',
+  functionsVersion: process.env.VITE_FUNCTIONS_VERSION || 'v1',
+  appBaseUrl: process.env.VITE_APP_BASE_URL || ''
+};

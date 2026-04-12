@@ -1,0 +1,24 @@
+﻿import React from 'react';
+import PayPalButton from '../components/PayPalButton';
+
+export default function PremiumPage() {
+  return (
+    <div className="max-w-2xl mx-auto p-4 space-y-4">
+      <h1 className="text-2xl font-bold">Premium & Verifizierung</h1>
+      <p className="text-sm">Unterstütze alice x forest und sichere dir die Verifizierung deines Profils. Zahlungen werden an <strong>Yasmin.Greve@gmx.de</strong> gesendet. Verifizierung erfolgt manuell nach Zahlungseingang.</p>
+
+      <div className="grid grid-cols-1 gap-4">
+        <div className="p-4 border rounded-lg bg-white/5">
+          <div className="mb-2">€4,99 — Monatlich</div>
+          <PayPalButton amount="4.99" onSuccess={(c) => alert('Danke! Zahlung empfangen: ' + JSON.stringify(c))} />
+        </div>
+        <div className="p-4 border rounded-lg bg-white/5">
+          <div className="mb-2">€39,99 — Jährlich (Verifiziert)</div>
+          <PayPalButton amount="39.99" onSuccess={(c) => alert('Danke! Zahlung empfangen: ' + JSON.stringify(c))} />
+        </div>
+      </div>
+
+      <p className="text-xs text-muted-foreground">Nach Zahlung sende bitte eine E-Mail an <a href="mailto:yasmingreveyg@gmail.com" className="text-primary">yasmingreveyg@gmail.com</a> mit deinem Profilnamen zur manuellen Freischaltung.</p>
+    </div>
+  );
+}

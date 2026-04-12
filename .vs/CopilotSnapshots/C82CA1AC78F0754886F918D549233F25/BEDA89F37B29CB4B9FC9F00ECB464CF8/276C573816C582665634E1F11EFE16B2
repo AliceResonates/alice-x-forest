@@ -1,0 +1,85 @@
+﻿import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Logo from './Logo';
+
+export default function AgbConsentModal() {
+  const [open, setOpen] = useState(false);
+  const [checkedAgb, setCheckedAgb] = useState(false);
+  const [checkedDsgvo, setCheckedDsgvo] = useState(false);
+
+  useEffect(() => {
+    const accepted = localStorage.getItem('axf_agb_accepted');
+    if (!accepted) {
+      setOpen(true);
+    }
+  }, []);
+
+  const handleAccept = () => {
+    localStorage.setItem('axf_agb_accepted', '1');
+    setOpen(false);
+  };
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div className="bg-white rounded-lg shadow-lg max-w-sm w-full p-4">
+        <div className="flex justify-center mb-2">
+          <Logo size="md" />
+        </div>
+        <h3 className="text-center text-lg font-semibold mb-2">
+          Willkommen bei alice <span className="text-primary">x</span> forest
+        </h3>
+        <p className="text-sm text-muted-foreground text-center mb-4">
+          Um die Plattform nutzen zu können, bitte stimme unseren Bedingungen zu.
+        </p>
+
+        <div className="space-y-3 bg-secondary/30 rounded-lg p-3 mb-4">
+          <label className="flex items-start gap-3">
+            <input
+              id="agb"
+              type="checkbox"
+              checked={checkedAgb}
+              onChange={e => setCheckedAgb(e.target.checked)}
+            />
+            <span className="text-sm leading-relaxed cursor-pointer">
+              Ich akzeptiere die{' '}
+              <Link to="/impressum" className="text-primary hover:underline" onClick={() => setOpen(false)}>
+                Allgemeinen Geschäftsbedingungen (AGB)
+              </Link>
+              .
+            </span>
+          </label>
+
+          <label className="flex items-start gap-3">
+            <input
+              id="dsgvo"
+              type="checkbox"
+              checked={checkedDsgvo}
+              onChange={e => setCheckedDsgvo(e.target.checked)}
+            />
+            <span className="text-sm leading-relaxed cursor-pointer">
+              Ich habe die{' '}
+              <Link to="/impressum" className="text-primary hover:underline" onClick={() => setOpen(false)}>
+                Datenschutzerklärung (DSGVO)
+              </Link>{' '}
+              gelesen und stimme der Verarbeitung meiner Daten zu.
+            </span>
+          </label>
+        </div>
+
+        <button
+          className="w-full px-4 py-2 bg-green-600 text-white rounded disabled:opacity-50"
+          disabled={!checkedAgb || !checkedDsgvo}
+          onClick={handleAccept}
+        >
+          Zustimmen & Weiter
+        </button>
+
+        <p className="text-[10px] text-muted-foreground text-center mt-3">
+          © 2026 alice x forest · Betrieben von Yasmin Greve, Bremen
+        </p>
+      </div>
+    </div>
+  );
+}

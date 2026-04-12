@@ -1,0 +1,61 @@
+﻿import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import ChatRoomList from '../components/ChatRoomList';
+import AiPartners from '../components/AiPartners';
+import CreatePostForm from '../components/CreatePostForm';
+import PostCard from '../components/PostCard';
+import { base44 } from '../api/base44Client';
+
+export default function AppLayout() {
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const currentUserEmail = 'dev@local';
+
+  const { data: posts = [] } = useQuery({
+    queryKey: ['posts'],
+    queryFn: () => base44.entities.Post.filter({}, '-created_date', 50),
+  });
+
+  const { data: rooms = [] } = useQuery({
+    queryKey: ['rooms'],
+    queryFn: () => base44.entities.ChatRoom.filter({}, '-last_message_at', 50),
+  });
+
+  const { data: profileList = [] } = useQuery({
+    queryKey: ['profile', currentUserEmail],
+    queryFn: () => base44.entities.Profile.filter({ user_email: currentUserEmail }),
+  });
+
+  const profile = profileList?.[0] || { id: 'p_dev', display_name: 'Dev', avatar_url: '' };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-6xl mx-auto grid grid-cols-12 gap-6 p-4">
+        <aside className="col-span-3 space-y-4">
+          <div className="sticky top-4 space-y-4">
+            <div className="bg-card border border-border rounded-xl p-4">
+              <h2 className="font-bold">Chats</h2>
+            </div>
+            <ChatRoomList rooms={rooms} user={{ email: currentUserEmail }} onSelect={setSelectedRoom} />
+            <AiPartners />
+          </div>
+        </aside>
+
+        <main className="col-span-6">
+          <div className="mb-4">
+            <CreatePostForm profile={profile} />
+          </div>
+
+          <div className="space-y-4">
+            {posts.map(p => (
+              <PostCard key={p.id} post={p} currentUserEmail={currentUserEmail} />
+            ))}
+          </div>
+        </main>
+
+        <aside className="col-span-3">
+          <div className="bg-card border border-border rounded-xl p-4">Right sidebar (placeholder)</div>
+        </aside>
+      </div>
+    </div>
+  );
+}

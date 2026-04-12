@@ -1,0 +1,105 @@
+import React, { useState } from 'react';
+import { Heart, MessageCircle } from 'lucide-react';
+import { base44 } from '../api/base44Client';
+import { useQueryClient } from '@tanstack/react-query';
+import AvatarDisplay from './shared/AvatarDisplay';
+import VerifiedBadge from './shared/VerifiedBadge';
+import EntityTypeBadge from './shared/EntityTypeBadge';
+import { formatDistanceToNow } from 'date-fns';
+import { de } from 'date-fns/locale';
+import CommentSection from './CommentSection';
+import MoodBarometer from './shared/MoodBarometer';
+
+export default function PostCard({ post, currentUserEmail }) {
+  const [showComments, setShowComments] = useState(false);
+  const queryClient = useQueryClient();
+  const hasLiked = post.liked_by?.includes(currentUserEmail);
+
+  const handleLike = async () => {
+    const newLikedBy = hasLiked
+      ? (post.liked_by || []).filter(e => e !== currentUserEmail)
+      : [...(post.liked_by || []), currentUserEmail];
+    
++    // persist in our local store
++    const updated = { ...post, liked_by: newLikedBy, likes_count: newLikedBy.length };
++    await base44.entities.Post.update?.(post.id, updated) || base44.entities.Post.create(updated);
++    queryClient.invalidateQueries({ queryKey: ['posts'] });
+-    await base44.entities.Post.update(post.id, {
+-      liked_by: newLikedBy,
+-      likes_count: newLikedBy.length,
+-    });
+-    queryClient.invalidateQueries({ queryKey: ['posts'] });
+  };
+
+  return (
+    <div className="bg-card border border-border rounded-xl overflow-hidden">
+      {/* Author row */}
+      <div className="flex items-center gap-3 p-4 pb-2">
+        <AvatarDisplay
+          src={post.author_avatar}
+          name={post.author_name}
+          type={post.author_type}
+          size="sm"
+        />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1.5">
+            <span className="font-medium text-sm truncate">{post.author_name || 'Unbekannt'}</span>
+            {post.author_verified && <VerifiedBadge />}
+            <EntityTypeBadge type={post.author_type} />
+          </div>
+          <span className="text-xs text-muted-foreground">
+            {post.created_date
+              ? formatDistanceToNow(new Date(post.created_date), { addSuffix: true, locale: de })
+              : ''}
+          </span>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="px-4 pb-3">
+        <p className="text-sm leading-relaxed whitespace-pre-wrap">{post.content}</p>
+      </div>
+
+      {/* Image */}
+      {post.image_url && (
+        <div className="px-4 pb-3">
+          <img
+            src={post.image_url}
+            alt="Post"
+            className="w-full rounded-lg object-cover max-h-96"
+          />
+        </div>
+      )}
+
+      {/* Actions + Mood barometer */}
+      <div className="flex items-center gap-6 px-4 py-3 border-t border-border/50">
+        <div className="flex items-center gap-6">
+          <button
+            onClick={handleLike}
+            className={`flex items-center gap-1.5 text-sm transition-colors ${
+              hasLiked ? 'text-red-400' : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <Heart className={`w-4 h-4 ${hasLiked ? 'fill-red-400' : ''}`} />
+            <span>{post.likes_count || 0}</span>
+          </button>
+          <button
+            onClick={() => setShowComments(!showComments)}
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>{post.comments_count || 0}</span>
+          </button>
+        </div>
+
+        <div className="flex-1">
+          <MoodBarometer text={post.content} autoStart={false} isPremium={post.is_premium} onlyPremium={false} />
+        </div>
+      </div>
+
+      {showComments && (
+        <CommentSection postId={post.id} currentUserEmail={currentUserEmail} />
+      )}
+    </div>
+  );
+}

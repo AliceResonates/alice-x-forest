@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="alice-x-forest.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>

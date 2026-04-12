@@ -1,0 +1,13 @@
+﻿import React from 'react';
+import ChatRoomPage from './pages/ChatRoomPage';
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-2xl font-bold p-4">Alice x Forest — Demo</h1>
+        <ChatRoomPage roomId="room_demo" />
+      </div>
+    </div>
+  );
+}

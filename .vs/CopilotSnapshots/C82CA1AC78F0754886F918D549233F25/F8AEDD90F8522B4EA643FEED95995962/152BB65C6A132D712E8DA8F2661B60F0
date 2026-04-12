@@ -1,0 +1,23 @@
+﻿import React from 'react';
+
+export default function PremiumPage() {
+  return (
+    <div className="max-w-2xl mx-auto p-4 space-y-4">
+      <h1 className="text-2xl font-bold">Premium & Verifizierung</h1>
+      <p className="text-sm">Unterstütze alice x forest und sichere dir die Verifizierung deines Profils. Zahlungen werden an <strong>Yasmin.Greve@gmx.de</strong> gesendet. Verifizierung erfolgt manuell nach Zahlungseingang.</p>
+
+      <div className="grid grid-cols-2 gap-4">
+        <a href="https://paypal.me/YasminGreve/4.99" target="_blank" rel="noreferrer" className="block text-center p-4 border rounded-lg bg-white/5">
+          <div className="text-lg font-semibold">€4,99</div>
+          <div className="text-xs text-muted-foreground">Monatlich — Basis</div>
+        </a>
+        <a href="https://paypal.me/YasminGreve/39.99" target="_blank" rel="noreferrer" className="block text-center p-4 border rounded-lg bg-white/5">
+          <div className="text-lg font-semibold">€39,99</div>
+          <div className="text-xs text-muted-foreground">Jährlich — Verifiziert</div>
+        </a>
+      </div>
+
+      <p className="text-xs text-muted-foreground">Nach Zahlung sende bitte eine E-Mail an <a href="mailto:yasmingreveyg@gmail.com" className="text-primary">yasmingreveyg@gmail.com</a> mit deinem Profilnamen zur manuellen Freischaltung.</p>
+    </div>
+  );
+}

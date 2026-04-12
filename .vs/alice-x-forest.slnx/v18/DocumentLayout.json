@@ -1,0 +1,742 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\Users\\Yasmin\\alice-x-forest\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\PayPalButton.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\PayPalButton.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ui\\card.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ui\\card.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\Feed.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\Feed.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\server\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:server\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\utils.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\utils.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\query-client.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\lib\\query-client.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\contexts\\AuthContext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\contexts\\AuthContext.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\hooks\\use-mobile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\hooks\\use-mobile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\UserNotRegisteredError.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\UserNotRegisteredError.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\PremiumPage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\PremiumPage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\TeamMomentCard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\TeamMomentCard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\MoodBarometer.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\MoodBarometer.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AvatarDisplay.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\AvatarDisplay.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AgbConsentModal.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\AgbConsentModal.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AdBanner.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\AdBanner.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\Logo.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Logo.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\layouts\\AppLayout.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\layouts\\AppLayout.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\PostCard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\PostCard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\MoodBarometer.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\shared\\MoodBarometer.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\EntityTypeBadge.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\shared\\EntityTypeBadge.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\VerifiedBadge.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\shared\\VerifiedBadge.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\CreatePostForm.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\CreatePostForm.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\CommentSection.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\CommentSection.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\base44Client.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\api\\base44Client.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AiPartners.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\AiPartners.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\base44.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\lib\\base44.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ChatRoomList.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ChatRoomList.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\AvatarDisplay.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\shared\\AvatarDisplay.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\App.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\ChatRoomPage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\ChatRoomPage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ChatMessage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ChatMessage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\hooks\\useChat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\hooks\\useChat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\chat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\api\\chat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\app-params.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\lib\\app-params.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\client.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\api\\client.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\entities\\ChatRoom.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:entities\\ChatRoom.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\entities\\Comment.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:entities\\Comment.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\entities\\Post.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:entities\\Post.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\entities\\Profile.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:entities\\Profile.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\entities\\Team.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:entities\\Team.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Users\\Yasmin\\alice-x-forest\\entities\\TeamMoment.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:entities\\TeamMoment.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "card.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ui\\card.jsx",
+              "RelativeDocumentMoniker": "src\\components\\ui\\card.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ui\\card.jsx",
+              "RelativeToolTip": "src\\components\\ui\\card.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:38:01.969Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Feed.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\Feed.jsx",
+              "RelativeDocumentMoniker": "src\\pages\\Feed.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\Feed.jsx",
+              "RelativeToolTip": "src\\pages\\Feed.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:37:01.295Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PayPalButton.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\PayPalButton.jsx",
+              "RelativeDocumentMoniker": "src\\components\\PayPalButton.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\PayPalButton.jsx",
+              "RelativeToolTip": "src\\components\\PayPalButton.jsx",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAqwDcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:34:33.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "app.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\server\\app.js",
+              "RelativeDocumentMoniker": "server\\app.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\server\\app.js",
+              "RelativeToolTip": "server\\app.js",
+              "ViewState": "AgIAABEAAAAAAAAAAIBJwJQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T07:34:26.949Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "utils.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\utils.js",
+              "RelativeDocumentMoniker": "src\\utils.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\utils.js",
+              "RelativeToolTip": "src\\utils.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T07:30:19.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "query-client.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\query-client.js",
+              "RelativeDocumentMoniker": "src\\lib\\query-client.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\query-client.js",
+              "RelativeToolTip": "src\\lib\\query-client.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T07:29:32.058Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AuthContext.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\contexts\\AuthContext.jsx",
+              "RelativeDocumentMoniker": "src\\contexts\\AuthContext.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\contexts\\AuthContext.jsx",
+              "RelativeToolTip": "src\\contexts\\AuthContext.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:27:03.151Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "use-mobile.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\hooks\\use-mobile.jsx",
+              "RelativeDocumentMoniker": "src\\hooks\\use-mobile.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\hooks\\use-mobile.jsx",
+              "RelativeToolTip": "src\\hooks\\use-mobile.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:19:19.609Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UserNotRegisteredError.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\UserNotRegisteredError.jsx",
+              "RelativeDocumentMoniker": "src\\components\\UserNotRegisteredError.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\UserNotRegisteredError.jsx",
+              "RelativeToolTip": "src\\components\\UserNotRegisteredError.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:18:27.677Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PremiumPage.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\PremiumPage.jsx",
+              "RelativeDocumentMoniker": "src\\pages\\PremiumPage.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\PremiumPage.jsx",
+              "RelativeToolTip": "src\\pages\\PremiumPage.jsx",
+              "ViewState": "AgIAAHMAAAAAAAAAAIBJwHUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:17:52.252Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TeamMomentCard.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\TeamMomentCard.jsx",
+              "RelativeDocumentMoniker": "src\\components\\TeamMomentCard.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\TeamMomentCard.jsx",
+              "RelativeToolTip": "src\\components\\TeamMomentCard.jsx",
+              "ViewState": "AgIAADAAAAAAAAAAAIBJwDYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:15:24.218Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MoodBarometer.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\MoodBarometer.jsx",
+              "RelativeDocumentMoniker": "src\\components\\MoodBarometer.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\MoodBarometer.jsx",
+              "RelativeToolTip": "src\\components\\MoodBarometer.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:05:50.615Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AvatarDisplay.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AvatarDisplay.jsx",
+              "RelativeDocumentMoniker": "src\\components\\AvatarDisplay.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AvatarDisplay.jsx",
+              "RelativeToolTip": "src\\components\\AvatarDisplay.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:05:22.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AgbConsentModal.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AgbConsentModal.jsx",
+              "RelativeDocumentMoniker": "src\\components\\AgbConsentModal.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AgbConsentModal.jsx",
+              "RelativeToolTip": "src\\components\\AgbConsentModal.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:03:13.189Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AdBanner.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AdBanner.jsx",
+              "RelativeDocumentMoniker": "src\\components\\AdBanner.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AdBanner.jsx",
+              "RelativeToolTip": "src\\components\\AdBanner.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:01:38.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Logo.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\Logo.jsx",
+              "RelativeDocumentMoniker": "src\\components\\Logo.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\Logo.jsx",
+              "RelativeToolTip": "src\\components\\Logo.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:01:06.52Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AppLayout.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\layouts\\AppLayout.jsx",
+              "RelativeDocumentMoniker": "src\\layouts\\AppLayout.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\layouts\\AppLayout.jsx",
+              "RelativeToolTip": "src\\layouts\\AppLayout.jsx",
+              "ViewState": "AgIAAEEAAAAAAAAAAIBJwEcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T07:00:11.915Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PostCard.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\PostCard.jsx",
+              "RelativeDocumentMoniker": "src\\components\\PostCard.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\PostCard.jsx",
+              "RelativeToolTip": "src\\components\\PostCard.jsx",
+              "ViewState": "AgIAAF8AAAAAAAAAAIBJwGkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:59:00.429Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "MoodBarometer.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\MoodBarometer.jsx",
+              "RelativeDocumentMoniker": "src\\components\\shared\\MoodBarometer.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\MoodBarometer.jsx",
+              "RelativeToolTip": "src\\components\\shared\\MoodBarometer.jsx",
+              "ViewState": "AgIAACEAAAAAAAAAAABQwIMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:58:38.727Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "EntityTypeBadge.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\EntityTypeBadge.jsx",
+              "RelativeDocumentMoniker": "src\\components\\shared\\EntityTypeBadge.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\EntityTypeBadge.jsx",
+              "RelativeToolTip": "src\\components\\shared\\EntityTypeBadge.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:58:30.794Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "VerifiedBadge.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\VerifiedBadge.jsx",
+              "RelativeDocumentMoniker": "src\\components\\shared\\VerifiedBadge.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\VerifiedBadge.jsx",
+              "RelativeToolTip": "src\\components\\shared\\VerifiedBadge.jsx",
+              "ViewState": "AgIAAAYAAAAAAAAAAIBJwAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:58:25.2Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "CreatePostForm.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\CreatePostForm.jsx",
+              "RelativeDocumentMoniker": "src\\components\\CreatePostForm.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\CreatePostForm.jsx",
+              "RelativeToolTip": "src\\components\\CreatePostForm.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:56:25.051Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "CommentSection.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\CommentSection.jsx",
+              "RelativeDocumentMoniker": "src\\components\\CommentSection.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\CommentSection.jsx",
+              "RelativeToolTip": "src\\components\\CommentSection.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:53:16.965Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "base44Client.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\base44Client.js",
+              "RelativeDocumentMoniker": "src\\api\\base44Client.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\base44Client.js",
+              "RelativeToolTip": "src\\api\\base44Client.js",
+              "ViewState": "AgIAAF8AAAAAAAAAAIBJwGsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T06:52:57.429Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AiPartners.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AiPartners.jsx",
+              "RelativeDocumentMoniker": "src\\components\\AiPartners.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\AiPartners.jsx",
+              "RelativeToolTip": "src\\components\\AiPartners.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:51:38.043Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "base44.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\base44.js",
+              "RelativeDocumentMoniker": "src\\lib\\base44.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\base44.js",
+              "RelativeToolTip": "src\\lib\\base44.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T06:49:52.684Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ChatRoomList.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ChatRoomList.jsx",
+              "RelativeDocumentMoniker": "src\\components\\ChatRoomList.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ChatRoomList.jsx",
+              "RelativeToolTip": "src\\components\\ChatRoomList.jsx",
+              "ViewState": "AgIAAC0AAAAAAAAAAIBJwC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:48:25.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "AvatarDisplay.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\AvatarDisplay.jsx",
+              "RelativeDocumentMoniker": "src\\components\\shared\\AvatarDisplay.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\shared\\AvatarDisplay.jsx",
+              "RelativeToolTip": "src\\components\\shared\\AvatarDisplay.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:48:11.309Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "package.json",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\package.json",
+              "RelativeDocumentMoniker": "package.json",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\package.json",
+              "RelativeToolTip": "package.json",
+              "ViewState": "AgIAAGMAAAAAAAAAAABBwGQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-28T06:42:57.129Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "index.css",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\index.css",
+              "RelativeDocumentMoniker": "src\\index.css",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\index.css",
+              "RelativeToolTip": "src\\index.css",
+              "ViewState": "AgIAAFoAAAAAAAAAAABBwFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-03-28T06:42:49.038Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "index.html",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\index.html",
+              "RelativeDocumentMoniker": "index.html",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\index.html",
+              "RelativeToolTip": "index.html",
+              "ViewState": "AgIAAAsAAAAAAAAAAMBdwBEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-03-28T06:42:44.738Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "main.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\main.jsx",
+              "RelativeDocumentMoniker": "src\\main.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\main.jsx",
+              "RelativeToolTip": "src\\main.jsx",
+              "ViewState": "AgIAAA4AAAAAAAAAAIBJwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:42:41.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "App.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\App.jsx",
+              "RelativeDocumentMoniker": "src\\App.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\App.jsx",
+              "RelativeToolTip": "src\\App.jsx",
+              "ViewState": "AgIAAAIAAAAAAAAAAIBJwAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:42:36.941Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "ChatRoomPage.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\ChatRoomPage.jsx",
+              "RelativeDocumentMoniker": "src\\pages\\ChatRoomPage.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\pages\\ChatRoomPage.jsx",
+              "RelativeToolTip": "src\\pages\\ChatRoomPage.jsx",
+              "ViewState": "AgIAAAEAAAAAAAAAAIBJwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:42:32.298Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "ChatMessage.jsx",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ChatMessage.jsx",
+              "RelativeDocumentMoniker": "src\\components\\ChatMessage.jsx",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\components\\ChatMessage.jsx",
+              "RelativeToolTip": "src\\components\\ChatMessage.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2026-03-28T06:42:24.343Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "useChat.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\hooks\\useChat.js",
+              "RelativeDocumentMoniker": "src\\hooks\\useChat.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\hooks\\useChat.js",
+              "RelativeToolTip": "src\\hooks\\useChat.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwBgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T06:42:16.575Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "chat.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\chat.js",
+              "RelativeDocumentMoniker": "src\\api\\chat.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\chat.js",
+              "RelativeToolTip": "src\\api\\chat.js",
+              "ViewState": "AgIAACAAAAAAAAAAAIBJwCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T06:42:09.887Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "app-params.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\app-params.js",
+              "RelativeDocumentMoniker": "src\\lib\\app-params.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\lib\\app-params.js",
+              "RelativeToolTip": "src\\lib\\app-params.js",
+              "ViewState": "AgIAADQAAAAAAAAAAIBJwDYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T06:42:05.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "client.js",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\client.js",
+              "RelativeDocumentMoniker": "src\\api\\client.js",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\src\\api\\client.js",
+              "RelativeToolTip": "src\\api\\client.js",
+              "ViewState": "AgIAAA0AAAAAAAAAAIBJwA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-28T06:41:59.406Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "ChatRoom.json",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\ChatRoom.json",
+              "RelativeDocumentMoniker": "entities\\ChatRoom.json",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\ChatRoom.json",
+              "RelativeToolTip": "entities\\ChatRoom.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-28T06:34:40.103Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "Comment.json",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\Comment.json",
+              "RelativeDocumentMoniker": "entities\\Comment.json",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\Comment.json",
+              "RelativeToolTip": "entities\\Comment.json",
+              "ViewState": "AgIAADoAAAAAAAAAAIBJwDwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-28T06:35:05.6Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Post.json",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\Post.json",
+              "RelativeDocumentMoniker": "entities\\Post.json",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\Post.json",
+              "RelativeToolTip": "entities\\Post.json",
+              "ViewState": "AgIAADgAAAAAAAAAAABBwDkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-28T06:35:12.085Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "Profile.json",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\Profile.json",
+              "RelativeDocumentMoniker": "entities\\Profile.json",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\Profile.json",
+              "RelativeToolTip": "entities\\Profile.json",
+              "ViewState": "AgIAADQAAAAAAAAAAABRwDcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-28T06:35:17.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "Team.json",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\Team.json",
+              "RelativeDocumentMoniker": "entities\\Team.json",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\Team.json",
+              "RelativeToolTip": "entities\\Team.json",
+              "ViewState": "AgIAADUAAAAAAAAAAABRwDgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-28T06:35:21.932Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "TeamMoment.json",
+              "DocumentMoniker": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\TeamMoment.json",
+              "RelativeDocumentMoniker": "entities\\TeamMoment.json",
+              "ToolTip": "F:\\Users\\Yasmin\\alice-x-forest\\entities\\TeamMoment.json",
+              "RelativeToolTip": "entities\\TeamMoment.json",
+              "ViewState": "AgIAADYAAAAAAAAAAABBwDcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-28T06:35:27.198Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "name": "Profile",
+  "type": "object",
+  "description": "User profile schema",
+  "properties": {
+    "email": { "type": "string" },
+    "display_name": {
+      "type": "string",
+      "description": "Display name shown on profile"
+    },
+    "avatar_url": {
+      "type": "string",
+      "description": "Profile picture URL"
+    },
+    "bio": {
+      "type": "string",
+      "description": "About/bio text"
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": ["human", "ai_agent"],
+      "description": "Whether this is a human or AI agent profile"
+    },
+    "header_url": {
+      "type": "string",
+      "description": "Profile header/banner image URL"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Premium verified status"
+    },
+    "is_premium": {
+      "type": "boolean",
+      "default": false,
+      "description": "Premium subscription status"
+    },
+    "font_color": {
+      "type": "string",
+      "default": "#a8e6a3",
+      "description": "Custom chat font color"
+    },
+    "team_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Teams this profile belongs to"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Associated user email"
+    }
+  },
+  "required": ["email", "display_name"]
+}

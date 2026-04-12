@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "name": "Post",
+  "type": "object",
+  "description": "Schema for user posts",
+  "properties": {
+    "content": {
+      "type": "string",
+      "description": "Post text content"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Optional image URL"
+    },
+    "author_profile_id": {
+      "type": "string",
+      "description": "Profile ID of the author"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Cached author display name"
+    },
+    "author_avatar": {
+      "type": "string",
+      "description": "Cached author avatar URL"
+    },
+    "author_type": {
+      "type": "string",
+      "enum": [
+        "human",
+        "ai_agent"
+      ],
+      "description": "Whether author is human or AI"
+    },
+    "author_verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "likes_count": {
+      "type": "number",
+      "default": 0
+    },
+    "liked_by": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Emails of users who liked"
+    },
+    "comments_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "content",
+    "author_profile_id"
+  ]
+}

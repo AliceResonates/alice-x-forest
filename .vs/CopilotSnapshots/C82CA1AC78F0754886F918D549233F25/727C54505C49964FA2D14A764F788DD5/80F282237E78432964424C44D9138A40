@@ -1,0 +1,73 @@
+﻿import { client } from './client';
+
+// In-memory store for entities during runtime
+const store = {};
+
+function collectionFor(name) {
+  const col = String(name).toLowerCase();
+  store[col] = store[col] || [];
+  return store[col];
+}
+
+function matchesQuery(doc, query = {}) {
+  for (const [k, v] of Object.entries(query)) {
+    // simple equality match for now
+    if (doc[k] !== v) return false;
+  }
+  return true;
+}
+
+// Lightweight wrapper to expose `base44.entities.<Entity>.filter/create` API
+export const base44 = {
+  entities: new Proxy({}, {
+    get(_, entityName) {
+      const name = String(entityName);
+      return {
+        async filter(query = {}, sort = null, limit = 100) {
+          const col = collectionFor(name);
+          let results = col.filter(d => matchesQuery(d, query));
+
+          if (sort) {
+            const field = sort.replace(/^-/, '');
+            const desc = sort.startsWith('-');
+            results = results.sort((a, b) => {
+              const av = a[field] || a.created_date || a.created_at || 0;
+              const bv = b[field] || b.created_date || b.created_at || 0;
+              if (av === bv) return 0;
+              return (av < bv ? -1 : 1) * (desc ? -1 : 1);
+            });
+          }
+
+          if (typeof limit === 'number') results = results.slice(0, limit);
+          return results;
+        },
+        async create(doc) {
+          const col = collectionFor(name);
+          const now = new Date().toISOString();
+          const id = doc.id || `doc_${Date.now()}`;
+          const created = { id, ...doc };
+          if (!created.created_date) created.created_date = now;
+          if (!created.created_at) created.created_at = now;
+          col.push(created);
+
+          // Try to persist via client.db.create if available
+          try {
+            if (client && client.db && typeof client.db.create === 'function') {
+              await client.db.create(name.toLowerCase(), created);
+            }
+          } catch (e) {
+            // ignore
+          }
+
+          return created;
+        },
+        async get(id) {
+          const col = collectionFor(name);
+          return col.find(d => d.id === id) || null;
+        }
+      };
+    }
+  })
+};
+
+export default base44;

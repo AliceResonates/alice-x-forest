@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "name": "TeamMoment",
+  "type": "object",
+  "description": "Team moment or update schema",
+  "properties": {
+    "team_id": {
+      "type": "string",
+      "description": "Team this moment belongs to"
+    },
+    "title": {
+      "type": "string",
+      "description": "Moment title"
+    },
+    "content": {
+      "type": "string",
+      "description": "Moment description/story"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Optional image"
+    },
+    "author_profile_id": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "likes_count": {
+      "type": "number",
+      "default": 0
+    },
+    "liked_by": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "required": ["team_id", "content"],
+  "rls": {
+    "create": {},
+    "read": {},
+    "update": {
+      "$or": [
+        { "created_by": "{{user.email}}" },
+        { "user_condition": { "role": "admin" } }
+      ]
+    },
+    "delete": {
+      "$or": [
+        { "created_by": "{{user.email}}" },
+        { "user_condition": { "role": "admin" } }
+      ]
+    }
+  }
+}
