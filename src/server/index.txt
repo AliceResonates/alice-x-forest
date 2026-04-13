@@ -1,6 +1,6 @@
 ﻿import express from "express";
 import cors from "cors";
-import { routeMessage } from "../logic/routing";
+import { routeMessage } from "../logic/routing.ts";
 
 const app = express();
 app.use(cors());
