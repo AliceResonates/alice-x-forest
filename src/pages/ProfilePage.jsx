@@ -11,6 +11,7 @@ import { ImagePlus, Save, Loader2 } from 'lucide-react';
 import AvatarDisplay from '../components/AvatarDisplay';
 import VerifiedBadge from '../components/shared/VerifiedBadge';
 import EntityTypeBadge from '../components/shared/EntityTypeBadge';
+import CompanionBond from '../components/CompanionBond';
 import PostCard from '../components/PostCard';
 import PayPalButton from '../components/PayPalButton';
 
@@ -137,6 +138,17 @@ export default function ProfilePage() {
               <span className="text-xs text-muted-foreground">{form.font_color || '#a8e6a3'}</span>
             </div>
           </div>
+          <div>
+            <Label>Companion Profil-ID</Label>
+            <Input
+              value={form.companion_profile_id || ''}
+              onChange={e => setForm(p => ({ ...p, companion_profile_id: e.target.value }))}
+              placeholder="z.B. p_123456"
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              Verknüpfe dein Profil mit einem KI-Begleiter.
+            </p>
+          </div>
           <div className="flex gap-2 pt-2">
             <Button onClick={() => saveMutation.mutate(form)} disabled={saveMutation.isPending} className="gap-2">
               {saveMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
@@ -174,6 +186,15 @@ export default function ProfilePage() {
         </div>
         {profile.about && (
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{profile.about}</p>
+        )}
+        {profile.companion_profile_id ? (
+          <div className="mt-4">
+            <CompanionBond companionProfileId={profile.companion_profile_id} />
+          </div>
+        ) : (
+          <div className="mt-4 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
+            <p>Kein Companion verknüpft. Trage im Profil eine Companion-Profil-ID ein, um die Beziehung sichtbar zu machen.</p>
+          </div>
         )}
         <Button variant="outline" size="sm" className="mt-3" onClick={() => setEditing(true)}>
           Profil bearbeiten

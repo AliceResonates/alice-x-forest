@@ -4,6 +4,7 @@ import { base44 } from '../api/base44Client';
 import CreatePostForm from '../components/CreatePostForm';
 import PostCard from '../components/PostCard';
 import AiPartners from '../components/AiPartners';
+import ChatCompanionLinks from '../components/ChatCompanionLinks';
 import AdBanner from '../components/AdBanner';
 import Logo from '../components/Logo';
 import { Loader2 } from 'lucide-react';
@@ -40,6 +41,7 @@ export default function Feed() {
       </div>
 
       <AiPartners />
+      <ChatCompanionLinks />
 
       {myProfile && <CreatePostForm profile={myProfile} />}
 

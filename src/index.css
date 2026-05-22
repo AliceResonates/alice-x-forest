@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -85,7 +83,23 @@
   }
 
   body {
-    font-family: var(--font-mono);
     @apply bg-background text-foreground font-mono;
+  }
+}
+
+@layer utilities {
+  @keyframes breathe {
+    0%, 100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.1;
+    }
+  }
+
+  .custom-breathing-cursor {
+    /* Für Browser, die die Animation des nativen Carets erlauben, oder als Fallback */
+    animation: breathe 3s ease-in-out infinite;
   }
 }

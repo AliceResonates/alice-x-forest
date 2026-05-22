@@ -102,6 +102,14 @@ const MODEL_MAP: Record<ModelId, string> = {
 };
 
 async function callModel(model: ModelId, messages: Message[]): Promise<ModelResponse | null> {
+  if (!OPENROUTER_API_KEY) {
+    console.error("OPENROUTER_API_KEY is not configured");
+    return null;
+  }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
   try {
     const response = await fetch(OPENROUTER_URL, {
       method: "POST",
@@ -115,15 +123,24 @@ async function callModel(model: ModelId, messages: Message[]): Promise<ModelResp
           role: m.role,
           content: m.content
         }))
-      })
+      }),
+      signal: controller.signal,
     });
 
     if (!response.ok) {
-      console.error(`Fehler bei Modell ${model}:`, await response.text());
+      const bodyText = await response.text();
+      console.error(`Fehler bei Modell ${model}: status=${response.status}, body=${bodyText.slice(0, 200)}`);
       return null;
     }
 
-    const data = await response.json();
+    let data: any;
+    try {
+      data = await response.json();
+    } catch (parseErr) {
+      console.error(`Ungültige JSON-Antwort von Modell ${model}:`, parseErr);
+      return null;
+    }
+
     const content = data.choices?.[0]?.message?.content || "";
 
     return {
@@ -132,8 +149,14 @@ async function callModel(model: ModelId, messages: Message[]): Promise<ModelResp
     };
 
   } catch (err) {
-    console.error(`Fehler beim Aufruf von ${model}:`, err);
+    if ((err as any)?.name === "AbortError") {
+      console.error(`Timeout beim Aufruf von Modell ${model}`);
+    } else {
+      console.error(`Fehler beim Aufruf von ${model}:`, err);
+    }
     return null;
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 

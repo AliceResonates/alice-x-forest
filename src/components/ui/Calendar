@@ -1,0 +1,16 @@
+import * as React from "react"
+import { Calendar } from "@/components/ui/calendar"
+
+export function MyCalendarHole() {
+  // Das hier ist der Motor!
+  const [date, setDate] = React.useState(new Date())
+
+  return (
+    <Calendar
+      mode="single" // WICHTIG: Ohne 'mode' weiß der Kalender nicht, wie er klicken soll
+      selected={date}
+      onSelect={setDate}
+      className="rounded-md border"
+    />
+  )
+}
