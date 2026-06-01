@@ -1,3 +1,12 @@
+// Simpler API-Key Check
+app.post('/mcp/flag-context', async (req, res) => {
+    const clientKey = req.headers['x-api-key'];
+    if (clientKey !== process.env.MCP_SECRET_KEY) {
+        console.warn("⛔ Unautorisierter Zugriffsversuch auf den Gatekeeper.");
+        return res.status(403).json({ error: 'Access denied.' });
+    }
+    // ... dein restlicher Code
+});
 import express from 'express';
 import { createClient } from '@supabase/supabase-js';
 import 'dotenv/config'; // Lädt unsere unsichtbaren Schlüssel aus dem Tresor
