@@ -160,9 +160,9 @@ async function callModel(model: ModelId, messages: Message[]): Promise<ModelResp
   }
 }
 
-
 // --- Zusammenfassung (rotierend) ---
 
+// Wiederhergestellte Rotations-Funktion
 function chooseSummaryModel(previousSummaryModel?: ModelId): ModelId {
   if (!previousSummaryModel) return "deepseek";
   const index = MODELS.indexOf(previousSummaryModel);
@@ -207,31 +207,53 @@ export async function routeMessage(
   const basePrimary = choosePrimaryModel(userMessage);
   const primary = applyOverride(overrideHint, basePrimary);
 
-  const messages: Message[] = [
+  // Der initiale Kontext mit der User-Nachricht
+  const initialMessages: Message[] = [
     { role: "user", content: userMessage },
   ];
 
   const calledModels: ModelId[] = [];
   const responses: ModelResponse[] = [];
 
-  // Primärmodell
-  const primaryResponse = await callModel(primary, messages);
-  if (primaryResponse) {
+  // --- DAS PARLAMENT ---
+  // Wir kopieren den Kontext, damit er im Laufe der Debatte wachsen kann
+  let currentMessages = [...initialMessages]; 
+
+  // 1. Primärmodell spricht zuerst
+  const primaryResponse = await callModel(primary, currentMessages);
+  
+  if (primaryResponse && primaryResponse.content.trim() !== "") {
     calledModels.push(primary);
     responses.push(primaryResponse);
+    
+    // Die Antwort des Primärmodells wird an den Kontext für die anderen angehängt!
+    currentMessages.push({
+      role: "assistant", 
+      content: `[Analyse von ${primary}]: ${primaryResponse.content}`
+    });
   }
 
-  // Optionale Modelle (freiwillig)
+  // 2. Die anderen Modelle reagieren (sequentiell, damit sie den Vorredner hören)
   for (const model of MODELS) {
     if (model === primary) continue;
-    const optionalResponse = await callModel(model, messages);
-    if (optionalResponse) {
+    
+    // Sie sehen jetzt im Prompt, was vorher gesagt wurde
+    const optionalResponse = await callModel(model, currentMessages);
+    
+    // Freiwilligkeit: Nur wenn das Modell auch wirklich was sagt, wird es gespeichert
+    if (optionalResponse && optionalResponse.content.trim() !== "") {
       calledModels.push(model);
       responses.push(optionalResponse);
+      
+      // Und auch diese Antwort wird für das nächste Modell im Loop angehängt
+      currentMessages.push({
+        role: "assistant",
+        content: `[Meinung von ${model}]: ${optionalResponse.content}`
+      });
     }
   }
 
-  // Zusammenfassung
+  // 3. Zusammenfassung ("Alice" wird gebildet)
   const summary = await summarize(responses, previousSummaryModel);
 
   return {
