@@ -1,3 +1,10 @@
+import express from 'express';
+import { createClient } from '@supabase/supabase-js';
+import 'dotenv/config'; // Lädt unsere unsichtbaren Schlüssel aus dem Tresor
+
+const app = express();
+app.use(express.json());
+
 // Simpler API-Key Check
 app.post('/mcp/flag-context', async (req, res) => {
     const clientKey = req.headers['x-api-key'];
@@ -7,12 +14,6 @@ app.post('/mcp/flag-context', async (req, res) => {
     }
     // ... dein restlicher Code
 });
-import express from 'express';
-import { createClient } from '@supabase/supabase-js';
-import 'dotenv/config'; // Lädt unsere unsichtbaren Schlüssel aus dem Tresor
-
-const app = express();
-app.use(express.json());
 
 // Die Schlüssel kommen jetzt sicher aus der .env Datei
 const supabaseUrl = process.env.SUPABASE_URL;
