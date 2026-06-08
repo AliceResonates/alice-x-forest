@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import { fetchRoomMessages, sendMessage } from '../api/chat';
 import { supabase } from '../lib/supabase'; // Dein Supabase Client
 
-export function useChat(roomId) {
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000';
+const DEFAULT_AGENT = 'gemma';
+
+export function useChat(roomId, sessionId) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -13,7 +16,7 @@ export function useChat(roomId) {
       if (mounted) setMessages(m);
     });
 
-    // 2. Dem Gatekeeper "zuhören" (Realtime Subscription)
+    // 2. Gatekeeper-Listener für System-Hygiene-Flags
     const subscription = supabase
       .channel('system-flags')
       .on(
@@ -22,28 +25,57 @@ export function useChat(roomId) {
           event: 'INSERT',
           schema: 'public',
           table: 'system_hygiene_flags',
-          filter: `session_id=eq.${roomId}` // Nur Flags für diesen Raum
+          filter: `session_id=eq.${roomId}`,
         },
         (payload) => {
           console.log('🚨 Gatekeeper Alarm empfangen:', payload.new);
-          // HIER reagiert das UI: z.B. Blur-Effekt über den Chat legen, 
-          // eine Warnung rendern oder den User-Input sperren.
         }
       )
       .subscribe();
 
-    // 3. Cleanup beim Verlassen des Raums
     return () => {
       mounted = false;
-      supabase.removeChannel(subscription); // Sauber aufräumen, damit keine Memory Leaks entstehen
+      supabase.removeChannel(subscription);
     };
   }, [roomId]);
 
-  // 4. Nachrichten senden (Der Teil, der bleiben sollte)
-  async function postMessage(message) {
-    const saved = await sendMessage(message);
-    setMessages((s) => [...s, saved]);
-    return saved;
+  async function postMessage(userText) {
+    const userMsg = await sendMessage({
+      room_id: roomId,
+      content: userText,
+      sender_name: 'Du',
+      sender_avatar: '',
+      font_color: '#a8e6a3',
+    });
+    setMessages((s) => [...s, userMsg]);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId ?? roomId,
+          agent_id: DEFAULT_AGENT,
+          message: userText,
+        }),
+      });
+
+      if (res.ok) {
+        const { model, content } = await res.json();
+        const aiMsg = await sendMessage({
+          room_id: roomId,
+          content,
+          sender_name: `Alice (${model})`,
+          sender_avatar: '',
+          font_color: '#c9b8f0',
+        });
+        setMessages((s) => [...s, aiMsg]);
+      }
+    } catch {
+      // Fail-soft: KI-Fehler bleibt unsichtbar im UI
+    }
+
+    return userMsg;
   }
 
   return { messages, postMessage };

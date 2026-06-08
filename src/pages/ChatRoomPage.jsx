@@ -3,26 +3,46 @@ import { useChat } from '../hooks/useChat';
 import ChatMessage from '../components/ChatMessage';
 
 export default function ChatRoomPage({ roomId }) {
-  const { messages, postMessage } = useChat(roomId);
+  const { messages, postMessage } = useChat(roomId, roomId);
   const [text, setText] = useState('');
 
   async function handleSend() {
     if (!text.trim()) return;
-    await postMessage({ room_id: roomId, content: text, sender_name: 'You', sender_avatar: '', font_color: '#a8e6a3' });
+    const t = text;
     setText('');
+    await postMessage(t);
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
   }
 
   return (
-    <div className="p-4">
-      <div className="space-y-2">
+    <div className="flex flex-col h-full p-4 gap-4">
+      <div className="flex-1 space-y-2 overflow-y-auto">
         {messages.map((m) => (
           <ChatMessage key={m.id} message={m} />
         ))}
       </div>
 
-      <div className="mt-4 flex space-x-2">
-        <input className="flex-1 border p-2" value={text} onChange={(e) => setText(e.target.value)} />
-        <button className="px-4 py-2 bg-green-500 text-white rounded" onClick={handleSend}>Send</button>
+      <div className="flex gap-2">
+        <input
+          className="flex-1 border rounded-xl px-3 py-2 text-sm"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Schreib Alice…"
+        />
+        <button
+          className="px-4 py-2 bg-green-600 text-white rounded-xl text-sm disabled:opacity-50"
+          onClick={handleSend}
+          disabled={!text.trim()}
+        >
+          Senden
+        </button>
       </div>
     </div>
   );

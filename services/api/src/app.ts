@@ -1,6 +1,7 @@
 ﻿import express from "express";
 import { createMemoryRouter } from "./routes/memory.routes";
 import { createSessionsRouter } from "./routes/sessions.routes";
+import { createChatRouter } from "./routes/chat.routes";
 import { errorHandler } from "./middleware/error.middleware";
 import { MemoryService } from "./services/MemoryService";
 import { Pool } from "pg";
@@ -20,6 +21,7 @@ export const createApp = () => {
   app.use(express.json());
   app.use("/api/memory", createMemoryRouter(memoryService));
   app.use("/api/sessions", createSessionsRouter());
+  app.use("/api/chat", createChatRouter(memoryService));
   app.use(errorHandler);
   return app;
 };
