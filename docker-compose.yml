@@ -1,0 +1,67 @@
+services:
+  embeddings:
+    build: ./services/embeddings
+    container_name: axf_embeddings
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:5000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: axf_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: axf_user
+      POSTGRES_PASSWORD: axf_pass
+      POSTGRES_DB: axf_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U axf_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    image: alice-x-forest-api:latest
+    container_name: axf_api
+    restart: unless-stopped
+    command: ["npx", "tsx", "src/server.ts"]
+    volumes:
+      - ./services/api:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      embeddings:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      EMBEDDINGS_URL: http://embeddings:5000
+      DB_USER: axf_user
+      DB_PASSWORD: axf_pass
+      DB_NAME: axf_db
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "3000:3000"
+
+  redis:
+    image: redis/redis-stack:latest
+    container_name: axf_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
