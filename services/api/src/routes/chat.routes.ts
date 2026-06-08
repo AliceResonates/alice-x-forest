@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { MemoryService } from "../services/MemoryService";
 import { routeWithContext } from "../services/ModelRouter";
+import { scoreEmotionalResonance, scoreDignity } from "../services/DignityScorer";
 import { asyncHandler } from "../utils/asyncHandler";
 
 const MEMORY_CONTEXT_LIMIT = 3;
@@ -49,7 +50,11 @@ export const createChatRouter = (memoryService: MemoryService) => {
       // 3. Modell aufrufen
       const result = await routeWithContext(message, systemPrompt);
 
-      // 4. Begegnung als Erinnerung speichern (fire-and-forget)
+      // 4. Dynamische Scores berechnen
+      const emotionalResonance = scoreEmotionalResonance(message);
+      const dignity = scoreDignity(message, result.content);
+
+      // 5. Begegnung als Erinnerung speichern (fire-and-forget)
       memoryService
         .storeEncounter(
           {
@@ -57,16 +62,17 @@ export const createChatRouter = (memoryService: MemoryService) => {
             sessionId: session_id,
             encounterTimestamp: Date.now(),
             context: message,
-            emotionalResonance: 0.5,
-            dignityPreserved: true,
+            emotionalResonance,
+            dignityPreserved: dignity.preserved,
           },
-          1.0
+          dignity.score
         )
         .catch((err) => console.error("Memory-Speicherung fehlgeschlagen:", err));
 
       return res.status(200).json({
         model: result.model,
         content: result.content,
+        scores: { emotionalResonance, dignityScore: dignity.score },
       });
     })
   );
