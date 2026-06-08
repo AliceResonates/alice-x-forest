@@ -6,7 +6,7 @@ import AiPartners from '../components/AiPartners';
 import { base44 } from '../api/base44Client';
 import { useAuth } from '../contexts/AuthContext';
 import UserNotRegisteredError from '../components/UserNotRegisteredError';
-import AgbConsentModal from '../components/shared/AgbConsentModal';
+import AgbConsentModal from '../components/AgbConsentModal';
 import CompanionBond from '../components/CompanionBond';
 
 export default function AppLayout() {
@@ -50,7 +50,7 @@ export default function AppLayout() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Navigation</h3>
             <nav className="space-y-2 text-sm">
               {[
-                { label: 'Feed', to: '/' },
+                { label: 'Feed', to: '/feed' },
                 { label: 'Profil', to: '/profile' },
                 { label: 'Companions', to: '/companions' },
                 { label: 'Teams', to: '/teams' },

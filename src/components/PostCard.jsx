@@ -19,16 +19,10 @@ export default function PostCard({ post, currentUserEmail }) {
     const newLikedBy = hasLiked
       ? (post.liked_by || []).filter(e => e !== currentUserEmail)
       : [...(post.liked_by || []), currentUserEmail];
-    
-+    // persist in our local store
-+    const updated = { ...post, liked_by: newLikedBy, likes_count: newLikedBy.length };
-+    await base44.entities.Post.update?.(post.id, updated) || base44.entities.Post.create(updated);
-+    queryClient.invalidateQueries({ queryKey: ['posts'] });
--    await base44.entities.Post.update(post.id, {
--      liked_by: newLikedBy,
--      likes_count: newLikedBy.length,
--    });
--    queryClient.invalidateQueries({ queryKey: ['posts'] });
+
+    const updated = { ...post, liked_by: newLikedBy, likes_count: newLikedBy.length };
+    await base44.entities.Post.update?.(post.id, updated) || base44.entities.Post.create(updated);
+    queryClient.invalidateQueries({ queryKey: ['posts'] });
   };
 
   return (

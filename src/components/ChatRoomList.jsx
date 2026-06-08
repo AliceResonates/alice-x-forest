@@ -1,5 +1,5 @@
 import React from 'react';
-import AvatarDisplay from '../shared/AvatarDisplay';
+import AvatarDisplay from './shared/AvatarDisplay';
 import { formatDistanceToNow } from 'date-fns';
 import { de } from 'date-fns/locale';
 
