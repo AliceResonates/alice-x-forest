@@ -27,7 +27,7 @@ export default function AppLayout() {
   const profile = profileList?.[0] || null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <AgbConsentModal />
       {authError?.type === 'user_not_registered' ? <UserNotRegisteredError /> : null}
       <div className="max-w-6xl mx-auto grid grid-cols-12 gap-6 p-4">
@@ -51,6 +51,7 @@ export default function AppLayout() {
             <nav className="space-y-2 text-sm">
               {[
                 { label: 'Feed', to: '/feed' },
+                { label: 'Wald', to: '/forest' },
                 { label: 'Profil', to: '/profile' },
                 { label: 'Companions', to: '/companions' },
                 { label: 'Teams', to: '/teams' },

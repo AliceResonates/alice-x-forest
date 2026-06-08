@@ -9,6 +9,7 @@ import TeamDetail from './pages/TeamDetail';
 import PageNotFound from './pages/PageNotFound';
 import ChatRoomPage from './pages/ChatRoomPage';
 import ForestEntry from './components/forest/ForestEntry';
+import ForestPage from './pages/ForestPage';
 
 function ForestEntryPage() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/" element={<AppLayout />}>
           <Route index element={<ForestEntryPage />} />
           <Route path="feed" element={<Feed />} />
+          <Route path="forest" element={<ForestPage />} />
           <Route path="chat/:sessionId" element={<ChatPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="companions" element={<CompanionsPage />} />

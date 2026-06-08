@@ -6,24 +6,24 @@
   :root {
     --font-mono: 'Fira Code', 'Consolas', 'Monaco', monospace;
 
-    --background: 140 10% 6%;
+    --background: 0 0% 0%;
     --foreground: 140 20% 90%;
-    --card: 140 10% 9%;
+    --card: 140 8% 5%;
     --card-foreground: 140 20% 90%;
-    --popover: 140 10% 8%;
+    --popover: 140 8% 4%;
     --popover-foreground: 140 20% 90%;
     --primary: 145 40% 42%;
     --primary-foreground: 140 20% 98%;
-    --secondary: 140 12% 14%;
+    --secondary: 140 10% 10%;
     --secondary-foreground: 140 20% 85%;
-    --muted: 140 8% 15%;
+    --muted: 140 6% 12%;
     --muted-foreground: 140 10% 55%;
-    --accent: 150 30% 20%;
+    --accent: 150 25% 14%;
     --accent-foreground: 145 30% 80%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 140 10% 16%;
-    --input: 140 10% 16%;
+    --border: 140 8% 12%;
+    --input: 140 8% 12%;
     --ring: 145 40% 42%;
     --chart-1: 145 50% 45%;
     --chart-2: 160 40% 40%;
@@ -42,24 +42,24 @@
   }
 
   .dark {
-    --background: 140 10% 6%;
+    --background: 0 0% 0%;
     --foreground: 140 20% 90%;
-    --card: 140 10% 9%;
+    --card: 140 8% 5%;
     --card-foreground: 140 20% 90%;
-    --popover: 140 10% 8%;
+    --popover: 140 8% 4%;
     --popover-foreground: 140 20% 90%;
     --primary: 145 40% 42%;
     --primary-foreground: 140 20% 98%;
-    --secondary: 140 12% 14%;
+    --secondary: 140 10% 10%;
     --secondary-foreground: 140 20% 85%;
-    --muted: 140 8% 15%;
+    --muted: 140 6% 12%;
     --muted-foreground: 140 10% 55%;
-    --accent: 150 30% 20%;
+    --accent: 150 25% 14%;
     --accent-foreground: 145 30% 80%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 140 10% 16%;
-    --input: 140 10% 16%;
+    --border: 140 8% 12%;
+    --input: 140 8% 12%;
     --ring: 145 40% 42%;
     --chart-1: 145 50% 45%;
     --chart-2: 160 40% 40%;

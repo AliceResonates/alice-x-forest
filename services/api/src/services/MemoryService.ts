@@ -47,6 +47,17 @@ export class MemoryService {
     );
   }
 
+  async getForestMemories(limit: number = 20): Promise<any[]> {
+    const result = await this.db.query(
+      `SELECT id, agent_id, session_id, content, emotional_resonance, dignity_score, created_at
+       FROM memories
+       ORDER BY created_at DESC
+       LIMIT $1`,
+      [limit]
+    );
+    return result.rows;
+  }
+
   async retrieveMemories(
     context: string,
     agentId: string,

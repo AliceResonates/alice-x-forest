@@ -18,6 +18,15 @@ export const createMemoryRouter = (memoryService: MemoryService) => {
     })
   );
 
+  router.get(
+    "/forest",
+    asyncHandler(async (req: Request, res: Response) => {
+      const limit = Math.min(Number(req.query.limit) || 20, 50);
+      const memories = await memoryService.getForestMemories(limit);
+      return res.status(200).json({ memories });
+    })
+  );
+
   router.post(
     "/query",
     asyncHandler(async (req: Request, res: Response) => {
