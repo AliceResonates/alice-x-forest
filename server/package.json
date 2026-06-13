@@ -1,20 +1,27 @@
 {
-  "name": "alice-x-forest-server",
-  "version": "0.1.0",
-  "main": "app.js",
+  "name": "axf-server",
+  "version": "1.0.0",
+  "main": "src/server/indexFinal.ts",
   "scripts": {
-    "start": "node app.js"
+    "start": "ts-node src/server/indexFinal.ts",
+    "dev": "nodemon src/server/indexFinal.ts",
+    "build": "tsc"
   },
   "dependencies": {
+    "@google-cloud/vertexai": "^1.12.0",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "node-fetch": "^2.6.7",
-    "body-parser": "^1.20.2"
-  }
-  ,
+    "pg": "^8.11.3"
+  },
   "devDependencies": {
-    "@types/node": "^22.13.5",
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/node-fetch": "^2.6.2",
-    "typescript": "^5.8.2"
+    "@types/node": "^20.11.5",
+    "@types/pg": "^8.10.9",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

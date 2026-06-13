@@ -34,7 +34,7 @@ export class MemoryService {
     await this.db.query(
       `INSERT INTO memories
          (agent_id, session_id, content, embedding, emotional_resonance, dignity_score, created_at)
-       VALUES ($1, $2, $3, $4::extensions.vector, $5, $6, to_timestamp($7))`,
+       VALUES ($1, $2, $3, $4::vector, $5, $6, to_timestamp($7))`,
       [
         agentId,
         sessionId ?? null,
@@ -67,10 +67,10 @@ export class MemoryService {
 
     const result = await this.db.query(
       `SELECT id, agent_id, session_id, content, emotional_resonance, dignity_score, created_at,
-              embedding <=> $1::extensions.vector AS distance
+              embedding <=> $1::vector AS distance
        FROM memories
        WHERE agent_id = $2
-       ORDER BY embedding <=> $1::extensions.vector
+       ORDER BY embedding <=> $1::vector
        LIMIT $3`,
       [this.toSql(embedding), agentId, limit]
     );
