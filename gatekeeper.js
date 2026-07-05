@@ -8,9 +8,16 @@ app.use(express.json());
 
 // Die Schlüssel kommen jetzt sicher aus der .env Datei
 const supabaseUrl = process.env.SUPABASE_URL;
-// (Hinweis: Für Backend-Zugriff wäre hier prozessual der SUPABASE_SERVICE_ROLE_KEY noch etwas eleganter, aber der Anon-Key funktioniert auch, sofern deine RLS-Policies in Supabase das erlauben)
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Seit der RLS-Härtung (Juli 2026) darf das Frontend (anon) nicht mehr in
+// system_hygiene_flags schreiben — der Gatekeeper braucht daher den Service-Role-Key.
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!supabaseKey) {
+    console.error("❌ SUPABASE_SERVICE_ROLE_KEY fehlt in der .env — ohne ihn kann der Gatekeeper keine Flags mehr schreiben (RLS blockt den Anon-Key).");
+    process.exit(1);
+}
+const supabase = createClient(supabaseUrl, supabaseKey, {
+    auth: { autoRefreshToken: false, persistSession: false }
+});
 
 // ---------------------------------------------------------
 // DAS IST UNSER MCP-BYPASS (Türsteher + Logik vereint)

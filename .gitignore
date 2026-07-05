@@ -32,5 +32,10 @@ dist-ssr
 components.json
 .vscode/
 
+# Lokale Arbeitsdaten (nicht committen)
+.claude/
+.vs/
+obj/
+
 
 

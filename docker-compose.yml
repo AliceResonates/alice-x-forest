@@ -6,10 +6,11 @@ services:
     ports:
       - "5000:5000"
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:5000/health || exit 1"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=3)"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 60s
 
   postgres:
     image: ankane/pgvector:latest
@@ -22,12 +23,13 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U axf_user"]
+      test: ["CMD-SHELL", "pg_isready -U axf_user -d axf_db"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   api:
+    build: ./services/api
     image: alice-x-forest-api:latest
     container_name: axf_api
     restart: unless-stopped
