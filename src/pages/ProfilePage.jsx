@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '../api/base44Client';
+import LoginGate from '../components/LoginGate';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
@@ -69,6 +70,10 @@ export default function ProfilePage() {
         <Loader2 className="w-6 h-6 animate-spin text-primary" />
       </div>
     );
+  }
+
+  if (!user?.email) {
+    return <LoginGate user={user} />;
   }
 
   // Show create/edit form
