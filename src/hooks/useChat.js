@@ -8,6 +8,7 @@ const DEFAULT_AGENT = 'gemma';
 export function useChat(roomId, sessionId) {
   const [messages, setMessages] = useState([]);
   const [latestScores, setLatestScores] = useState(null);
+  const [parliamentThoughts, setParliamentThoughts] = useState([]);
 
   useEffect(() => {
     let mounted = true;
@@ -62,8 +63,9 @@ export function useChat(roomId, sessionId) {
       });
 
       if (res.ok) {
-        const { model, content, scores } = await res.json();
+        const { model, content, scores, parliament } = await res.json();
         setLatestScores(scores ?? null);
+        setParliamentThoughts(parliament?.responses ?? []);
 
         const aiMsg = await sendMessage({
           room_id: roomId,
@@ -82,5 +84,5 @@ export function useChat(roomId, sessionId) {
     return userMsg;
   }
 
-  return { messages, postMessage, latestScores };
+  return { messages, postMessage, latestScores, parliamentThoughts };
 }

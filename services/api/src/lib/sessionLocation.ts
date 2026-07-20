@@ -1,9 +1,14 @@
 import axios from "axios";
 import { createClient } from "@supabase/supabase-js";
+import ws from "ws";
 
+// Node 20 hat kein natives WebSocket — supabase-js braucht für den
+// (hier ungenutzten) Realtime-Client sonst explizit einen Transport,
+// sonst wirft schon der Konstruktor beim Start.
 const supabase = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  { realtime: { transport: ws as any } }
 );
 
 type LocationResult = { lat: number; lng: number } | null;

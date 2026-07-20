@@ -1,3 +1,19 @@
-FROM pierrezemb/gostatic
-COPY . /srv/http/
-CMD ["-port","8080","-https-promote", "-enable-logging"]
+# Stage 1: Build
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_ANON_KEY
+ARG VITE_API_BASE_URL
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+ENV VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+RUN npm run build
+
+# Stage 2: Serve — nur der fertige dist-Ordner
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 8080

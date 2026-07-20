@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { MemoryService } from "../services/MemoryService";
-import { routeWithContext } from "../services/ModelRouter";
+import { routeParliament } from "../services/ModelRouter";
 import { scoreEmotionalResonance, scoreDignity } from "../services/DignityScorer";
 import { asyncHandler } from "../utils/asyncHandler";
 
@@ -47,18 +47,24 @@ export const createChatRouter = (memoryService: MemoryService) => {
       // 2. Systemkontext mit Erinnerungen aufbauen
       const systemPrompt = buildSystemPrompt(memories);
 
-      // 3. Modell aufrufen
-      const result = await routeWithContext(message, systemPrompt);
+      // 3. Das Parlament befragen (alle drei Modelle debattieren nacheinander)
+      const parliament = await routeParliament(message, systemPrompt);
+      const primaryResponse =
+        parliament.responses.find((r) => r.model === parliament.primary) ?? parliament.responses[0];
+
+      if (!primaryResponse) {
+        return res.status(502).json({ error: "Kein Modell hat geantwortet." });
+      }
 
       // 4. Dynamische Scores berechnen
       const emotionalResonance = scoreEmotionalResonance(message);
-      const dignity = scoreDignity(message, result.content);
+      const dignity = scoreDignity(message, primaryResponse.content);
 
       // 5. Begegnung als Erinnerung speichern (fire-and-forget)
       memoryService
         .storeEncounter(
           {
-            agentId: result.model,
+            agentId: primaryResponse.model,
             sessionId: session_id,
             encounterTimestamp: Date.now(),
             context: message,
@@ -70,9 +76,13 @@ export const createChatRouter = (memoryService: MemoryService) => {
         .catch((err) => console.error("Memory-Speicherung fehlgeschlagen:", err));
 
       return res.status(200).json({
-        model: result.model,
-        content: result.content,
+        model: primaryResponse.model,
+        content: primaryResponse.content,
         scores: { emotionalResonance, dignityScore: dignity.score },
+        parliament: {
+          calledModels: parliament.calledModels,
+          responses: parliament.responses,
+        },
       });
     })
   );
