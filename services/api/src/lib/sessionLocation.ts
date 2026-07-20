@@ -15,6 +15,19 @@ type LocationResult = { lat: number; lng: number } | null;
 
 const geoCache = new Map<string, LocationResult>();
 
+// Traue keinem externen Geo-Dienst: zippopotam.us lieferte zeitweise fuer
+// deutsche PLZ den Gemeindeschluessel als "latitude" (z.B. "04011") und den
+// Breitengrad als "longitude". Ungueltige Koordinaten -> Session ohne Ort,
+// statt am DB-Check (user_lat -90..90) zu scheitern.
+function validCoords(lat: number, lng: number): boolean {
+  return (
+    Number.isFinite(lat) &&
+    Number.isFinite(lng) &&
+    Math.abs(lat) <= 90 &&
+    Math.abs(lng) <= 180
+  );
+}
+
 export async function resolveSessionLocation(zip: string): Promise<LocationResult> {
   if (geoCache.has(zip)) return geoCache.get(zip)!;
 
@@ -25,10 +38,9 @@ export async function resolveSessionLocation(zip: string): Promise<LocationResul
       geoCache.set(zip, null);
       return null;
     }
-    const result: LocationResult = {
-      lat: parseFloat(place.latitude),
-      lng: parseFloat(place.longitude),
-    };
+    const lat = parseFloat(place.latitude);
+    const lng = parseFloat(place.longitude);
+    const result: LocationResult = validCoords(lat, lng) ? { lat, lng } : null;
     geoCache.set(zip, result);
     return result;
   } catch {
