@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '../api/base44Client';
 import LoginGate from '../components/LoginGate';
@@ -20,6 +21,9 @@ export default function ProfilePage() {
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({});
+  // ?id=... in der URL = fremdes Profil ansehen (z.B. aus dem Companion-Zirkel)
+  const [searchParams] = useSearchParams();
+  const viewId = searchParams.get('id');
 
   const { data: user } = useQuery({
     queryKey: ['currentUser'],
@@ -37,6 +41,19 @@ export default function ProfilePage() {
     queryKey: ['myPosts', profile?.id],
     queryFn: () => base44.entities.Post.filter({ author_profile_id: profile?.id }, '-created_date', 20),
     enabled: !!profile?.id,
+  });
+
+  // Öffentliche Ansicht eines fremden Profils (Lesezugriff ist per RLS erlaubt)
+  const { data: viewedProfile, isLoading: viewedLoading } = useQuery({
+    queryKey: ['publicProfile', viewId],
+    queryFn: () => base44.entities.Profile.get(viewId),
+    enabled: !!viewId,
+  });
+
+  const { data: viewedPosts = [] } = useQuery({
+    queryKey: ['publicPosts', viewId],
+    queryFn: () => base44.entities.Post.filter({ author_profile_id: viewId }, '-created_date', 20),
+    enabled: !!viewId,
   });
 
   useEffect(() => {
@@ -63,6 +80,68 @@ export default function ProfilePage() {
     const res = await base44.integrations?.Core?.UploadFile ? await base44.integrations.Core.UploadFile({ file }) : { file_url: URL.createObjectURL(file) };
     setForm(prev => ({ ...prev, [field]: res.file_url }));
   };
+
+  // ---- Öffentliche Profilansicht (fremdes Profil via ?id=...) ----
+  if (viewId && viewId !== profile?.id) {
+    if (viewedLoading) {
+      return (
+        <div className="flex justify-center py-12">
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        </div>
+      );
+    }
+    if (!viewedProfile) {
+      return (
+        <div className="rounded-xl border border-border bg-card p-6 text-center space-y-3">
+          <p className="text-sm text-muted-foreground">Dieses Profil wurde nicht gefunden.</p>
+          <Link to="/companions" className="text-sm text-primary hover:underline">Zurück zum Companion-Zirkel</Link>
+        </div>
+      );
+    }
+    return (
+      <div className="space-y-4">
+        <div className="relative rounded-xl overflow-hidden">
+          <div className="h-36 bg-gradient-to-br from-primary/30 to-accent/30">
+            {viewedProfile.header_url && (
+              <img src={viewedProfile.header_url} alt="" className="w-full h-full object-cover" />
+            )}
+          </div>
+          <div className="absolute -bottom-8 left-4">
+            <AvatarDisplay src={viewedProfile.avatar_url} name={viewedProfile.display_name} type={viewedProfile.entity_type} size="xl" />
+          </div>
+        </div>
+
+        <div className="pt-10 px-1">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-bold">{viewedProfile.display_name}</h2>
+            {viewedProfile.is_verified && <VerifiedBadge className="w-5 h-5" />}
+            <EntityTypeBadge type={viewedProfile.entity_type} />
+          </div>
+          {viewedProfile.about && (
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{viewedProfile.about}</p>
+          )}
+          {viewedProfile.companion_profile_id && (
+            <div className="mt-4">
+              <CompanionBond companionProfileId={viewedProfile.companion_profile_id} />
+            </div>
+          )}
+          <Link to="/companions" className="inline-block mt-3 text-sm text-primary hover:underline">
+            Zurück zum Companion-Zirkel
+          </Link>
+        </div>
+
+        <div className="space-y-4 pt-4">
+          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Beiträge</h3>
+          {viewedPosts.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Noch keine Beiträge.</p>
+          ) : (
+            viewedPosts.map(post => <PostCard key={post.id} post={post} currentUserEmail={user?.email} />)
+          )}
+        </div>
+      </div>
+    );
+  }
+  // ---- Ende öffentliche Profilansicht ----
 
   if (isLoading) {
     return (
