@@ -6,10 +6,16 @@
 app = 'alice-x-forest'
 primary_region = 'iad'
 
-[build]
+# Build-Argumente fuers Frontend-Bundle. Der Anon-Key ist der oeffentliche
+# Publishable-Key von Supabase — er ist fuer den Browser bestimmt und darf hier stehen.
+[build.args]
+  VITE_SUPABASE_URL = 'https://ksgznztfidlunqvitmsn.supabase.co'
+  VITE_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzZ3puenRmaWRsdW5xdml0bXNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwOTk5MDksImV4cCI6MjA5NDY3NTkwOX0.RFUCb_LdVMaoQQbSCwDh0ikJabvRxwD2Kvmjca8CF8U'
+  VITE_API_BASE_URL = 'https://alice-x-forest-api.fly.dev'
 
 [http_service]
-  internal_port = 80
+  # nginx im Container lauscht auf 8080 (siehe nginx.conf) — muss hier uebereinstimmen
+  internal_port = 8080
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
@@ -17,7 +23,6 @@ primary_region = 'iad'
   processes = ['app']
 
 [[vm]]
-  memory = '1gb'
+  memory = '256mb'
   cpu_kind = 'shared'
   cpus = 1
-  memory_mb = 256
