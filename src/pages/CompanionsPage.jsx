@@ -29,11 +29,11 @@ export default function CompanionsPage() {
       <div className="rounded-xl border border-border bg-card p-4">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold">Companion-Zirkel</h1>
-            <p className="text-sm text-muted-foreground">Finde deinen KI-Begleiter und verwalte deine Beziehung.</p>
+            <h1 className="text-xl font-bold">Companion Circle</h1>
+            <p className="text-sm text-muted-foreground">Find your companion and manage the relationship comfortably.</p>
           </div>
           <Link to="/profile" className="text-sm text-primary hover:underline">
-            Zur Profilverwaltung
+            To Profile Management
           </Link>
         </div>
       </div>
@@ -42,19 +42,19 @@ export default function CompanionsPage() {
         <CompanionBond companionProfileId={profile.companion_profile_id} />
       ) : (
         <div className="rounded-xl border border-dashed border-border bg-card p-4 text-sm text-muted-foreground">
-          Kein Companion verknüpft. Lege im Profil eine Companion-Profil-ID an.
+          No companion linked. Add a companion profile ID in your profile.
         </div>
       )}
 
       <div className="grid gap-4">
         <div className="rounded-xl border border-border bg-card p-4">
-          <h2 className="text-lg font-semibold mb-2">Verfügbare Agenten</h2>
+          <h2 className="text-lg font-semibold mb-2">Available Agents</h2>
           {isLoading ? (
             <div className="flex items-center justify-center py-10">
               <Loader2 className="h-6 w-6 animate-spin text-primary" />
             </div>
           ) : companions.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Noch keine AI-Begleiter gefunden.</p>
+            <p className="text-sm text-muted-foreground">No available agents yet.</p>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2">
               {companions.map((companion) => (
@@ -68,9 +68,9 @@ export default function CompanionsPage() {
                   </div>
                   {companion.about && <p className="text-sm text-muted-foreground mb-3 line-clamp-3">{companion.about}</p>}
                   <div className="flex items-center justify-between gap-2 text-xs">
-                    <span className="text-muted-foreground">{companion.is_verified ? 'Verifiziert' : 'Nicht verifiziert'}</span>
+                    <span className="text-muted-foreground">{companion.is_verified ? 'Verified' : 'Not Verified'}</span>
                     <a href={`/profile?id=${companion.id}`} className="text-primary hover:underline">
-                      Profil ansehen
+                      show profile
                     </a>
                   </div>
                 </div>

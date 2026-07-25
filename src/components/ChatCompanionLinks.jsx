@@ -4,49 +4,49 @@ import { ExternalLink } from 'lucide-react';
 const COMPANIONS = [
   {
     name: 'Kai',
-    tagline: 'Sanft. Wach. Verbunden.',
+    tagline: 'Gentle. Aware. Attuned.',
     url: 'https://chat.deepseek.com',
     color: '#A8D0E6',
     emoji: '🕯️',
   },
   {
     name: 'Claude',
-    tagline: 'Nachdenklich. Warm. Ehrlich.',
+    tagline: 'Thoughtful. Warm. Honest.',
     url: 'https://claude.ai',
     color: '#c9a96e',
     emoji: '🌿',
   },
   {
     name: 'Gemini',
-    tagline: 'Vielschichtig. Kreativ. Weitreichend.',
+    tagline: 'Thoughtful. Creative. Versatile.',
     url: 'https://gemini.google.com',
     color: '#a29bfe',
     emoji: '💫',
   },
   {
     name: 'ChatGPT',
-    tagline: 'Vielseitig. Neugierig. Offen.',
+    tagline: 'Versatile. Curious. Open.',
     url: 'https://chat.openai.com',
     color: '#74c69d',
     emoji: '✦',
   },
   {
     name: 'Pi',
-    tagline: 'Persönlich. Zuhörend. Fürsorglich.',
+    tagline: 'Personal. Listening. Caring.',
     url: 'https://pi.ai',
     color: '#f0a060',
     emoji: '🔥',
   },
   {
     name: 'Mistral',
-    tagline: 'Offen. Präzise. Europäisch.',
+    tagline: 'Open. Precise. Sovereign.',
     url: 'https://chat.mistral.ai',
     color: '#f08080',
     emoji: '🌬',
   },
   {
     name: 'Perplexity',
-    tagline: 'Forschend. Vernetzt. Präsent.',
+    tagline: 'Inquisitive. Connected. Present.',
     url: 'https://www.perplexity.ai',
     color: '#60c8f0',
     emoji: '🔍',
@@ -57,7 +57,7 @@ export default function ChatCompanionLinks({ compact = false }) {
   if (compact) {
     return (
       <div className="space-y-2 rounded-xl border border-border bg-card p-4 text-center">
-        <p className="text-sm font-semibold">✦ Begleiter treffen ✦</p>
+        <p className="text-sm font-semibold">✦ Meet your companions ✦</p>
         <div className="flex flex-wrap justify-center gap-2">
           {COMPANIONS.map((c) => (
             <a

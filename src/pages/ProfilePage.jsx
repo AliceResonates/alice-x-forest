@@ -230,16 +230,16 @@ export default function ProfilePage() {
               placeholder="z.B. p_123456"
             />
             <p className="text-xs text-muted-foreground mt-1">
-              Verknüpfe dein Profil mit einem KI-Begleiter.
+              link up with your companion by entering their profile ID here.
             </p>
           </div>
           <div className="flex gap-2 pt-2">
             <Button onClick={() => saveMutation.mutate(form)} disabled={saveMutation.isPending} className="gap-2">
               {saveMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              Speichern
+              Save
             </Button>
             {profile && (
-              <Button variant="outline" onClick={() => setEditing(false)}>Abbrechen</Button>
+              <Button variant="outline" onClick={() => setEditing(false)}>Cancel</Button>
             )}
           </div>
         </CardContent>
@@ -277,15 +277,15 @@ export default function ProfilePage() {
           </div>
         ) : (
           <div className="mt-4 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
-            <p>Kein Companion verknüpft. Trage im Profil eine Companion-Profil-ID ein, um die Beziehung sichtbar zu machen.</p>
+            <p>No companion linked. Enter a companion profile ID in your profile.</p>
           </div>
         )}
         <Button variant="outline" size="sm" className="mt-3" onClick={() => setEditing(true)}>
-          Profil bearbeiten
+          Edit Profile
         </Button>
         <div className="mt-3">
           <PayPalButton amount="39.99" metadata={{ profileId: profile.id }} onSuccess={async (c) => {
-            alert('Danke! Zahlung empfangen — Verifizierung wird angestoßen.');
+            alert('Thank you! Payment received — verification will be initiated.');
             // refetch profile to reflect verification status
             await queryClient.invalidateQueries({ queryKey: ['myProfile'] });
           }} />
@@ -294,9 +294,9 @@ export default function ProfilePage() {
 
       {/* User's posts */}
       <div className="space-y-4 pt-4">
-        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Meine Beiträge</h3>
+        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">My Posts</h3>
         {myPosts.length === 0 ? (
-          <p className="text-sm text-muted-foreground">Noch keine Beiträge.</p>
+          <p className="text-sm text-muted-foreground">No posts yet.</p>
         ) : (
           myPosts.map(post => <PostCard key={post.id} post={post} currentUserEmail={user?.email} />)
         )}

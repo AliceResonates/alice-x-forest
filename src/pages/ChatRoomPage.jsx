@@ -50,12 +50,12 @@ export default function ChatRoomPage({ roomId }) {
       <div className="relative z-10 flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth">
         {messages.length === 0 && (
           <div className="flex items-center justify-center h-full text-[#404040] text-sm uppercase tracking-widest">
-            Der Wald schweigt.
+            The forest is silent.
           </div>
         )}
 
         {messages.map((msg, idx) => {
-          const isUser = msg.sender_name === 'Du';
+          const isUser = msg.sender_name === 'You';
           return (
             <div key={msg.id || idx} className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
               <span className="text-[10px] text-gray-500 mb-1 uppercase tracking-wider pl-1">
@@ -92,7 +92,7 @@ export default function ChatRoomPage({ roomId }) {
                 handleSend(e);
               }
             }}
-            placeholder="Sprich in den Wald..."
+            placeholder="Speak into the forest..."
             disabled={isSending}
             rows={1}
             className="flex-1 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-[#a8e6a3] transition-colors disabled:opacity-50 resize-none min-h-[44px]"
@@ -102,7 +102,7 @@ export default function ChatRoomPage({ roomId }) {
             disabled={isSending || !inputValue.trim()}
             className="h-[44px] px-6 bg-[#121212] hover:bg-[#1a1a1a] text-[#a8e6a3] border border-[#2a2a2a] rounded-lg text-sm uppercase tracking-wider transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            {isSending ? '...' : 'Senden'}
+            {isSending ? '...' : 'Send'}
           </button>
         </form>
       </div>

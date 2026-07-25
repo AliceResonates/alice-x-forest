@@ -70,16 +70,16 @@ export default function AppLayout() {
           </div>
 
           <div className="bg-card border border-border rounded-2xl p-4 shadow-sm">
-            <p className="text-xs uppercase tracking-widest text-primary/70 mb-2">Companion-Zirkel</p>
-            <h4 className="text-lg font-semibold">Dein KI-Begleiter</h4>
+            <p className="text-xs uppercase tracking-widest text-primary/70 mb-2">Companion Circle</p>
+            <h4 className="text-lg font-semibold">Your AI Companion</h4>
             <p className="mt-2 text-sm text-muted-foreground">
-              Finde deinen Companion und verwalte die Beziehung komfortabel.
+            Find your companion and manage the relationship comfortably.
             </p>
             <Link
               to="/companions"
               className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90"
             >
-              Zu den Companions
+              Go to Companions
             </Link>
           </div>
 
@@ -87,13 +87,13 @@ export default function AppLayout() {
             <CompanionBond companionProfileId={profile.companion_profile_id} />
           ) : (
             <div className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
-              <p>Kein Companion verknüpft. Füge eine Companion-Profil-ID im Profil hinzu.</p>
+              <p>No companion linked. Add a companion profile ID in your profile.</p>
             </div>
           )}
 
           <div className="bg-card border border-border rounded-xl p-4">
-            <Link to="/profile" className="block text-sm font-medium text-primary">Premium & Verifizierung</Link>
-            <p className="text-xs text-muted-foreground">Support the Projekt — Verifizierung manuell nach Zahlung</p>
+            <Link to="/profile" className="block text-sm font-medium text-primary">Premium & Verification</Link>
+            <p className="text-xs text-muted-foreground">Support the Project — Verification manually after payment</p>
           </div>
         </aside>
       </div>

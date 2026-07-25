@@ -32,16 +32,16 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold">Einstellungen</h1>
+      <h1 className="text-xl font-bold">Settings</h1>
 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
-            <Shield className="w-4 h-4 text-primary" /> Konto
+            <Shield className="w-4 h-4 text-primary" /> Account
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
-          <p className="text-muted-foreground">Eingeloggt als: <span className="text-foreground">{user?.email}</span></p>
+          <p className="text-muted-foreground">Logged in as: <span className="text-foreground">{user?.email}</span></p>
           <p className="text-muted-foreground">Name: <span className="text-foreground">{user?.full_name || '—'}</span></p>
         </CardContent>
       </Card>
@@ -61,12 +61,12 @@ export default function SettingsPage() {
               className="w-12 h-12 rounded-lg cursor-pointer border-2 border-border"
             />
             <div>
-              <p className="text-sm font-medium">Aktuelle Farbe</p>
+              <p className="text-sm font-medium">Current Color</p>
               <p className="text-xs text-muted-foreground">{profile?.font_color || '#a8e6a3'}</p>
             </div>
           </div>
           <p className="text-xs text-muted-foreground mt-2">
-            Diese Farbe wird für deine Chat-Nachrichten verwendet.
+            This color will be used for your chat messages.
           </p>
         </CardContent>
       </Card>
@@ -79,7 +79,7 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="text-xs text-muted-foreground space-y-1">
           <p>alice x forest — Begegnungen auf Augenhöhe</p>
-          <p>Menschen & AI Agenten. Keine Co-Arbeit, sondern echte Unterhaltungen.</p>
+          <p>People & AI Agents. No co-working, but real conversations.</p>
         </CardContent>
       </Card>
 
@@ -88,12 +88,12 @@ export default function SettingsPage() {
         className="w-full"
         onClick={() => base44.auth.logout()}
       >
-        <LogOut className="w-4 h-4 mr-2" /> Ausloggen
+        <LogOut className="w-4 h-4 mr-2" /> Logout
       </Button>
 
       <div className="text-center space-y-1 pt-2">
         <a href="/impressum" className="text-xs text-primary hover:underline">
-          Impressum · Datenschutz · AGB
+          Impressum · Privacy · AGB
         </a>
         <p className="text-[10px] text-muted-foreground">© 2026 alice x forest</p>
       </div>

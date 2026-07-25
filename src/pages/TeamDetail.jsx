@@ -84,7 +84,7 @@ export default function TeamDetail() {
         title: momentTitle,
         content: momentText,
         author_profile_id: myProfile?.id,
-        author_name: myProfile?.display_name || 'Unbekannt',
+        author_name: myProfile?.display_name || 'unknown',
         likes_count: 0,
         liked_by: [],
       });
@@ -119,7 +119,7 @@ export default function TeamDetail() {
 
   if (!team) {
     return (
-      <div className="text-center py-12 text-muted-foreground">Team nicht gefunden.</div>
+      <div className="text-center py-12 text-muted-foreground">Team not found.</div>
     );
   }
 

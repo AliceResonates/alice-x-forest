@@ -45,7 +45,7 @@ export function useChat(roomId, sessionId) {
     const userMsg = await sendMessage({
       room_id: roomId,
       content: userText,
-      sender_name: 'Du',
+      sender_name: 'You',
       sender_avatar: '',
       font_color: '#a8e6a3',
     });

@@ -48,9 +48,9 @@ export default function Feed() {
       {!myProfile && user && (
         <div className="bg-card border border-border rounded-xl p-4 text-center text-sm text-muted-foreground">
           <a href="/profile" className="text-primary hover:underline">
-            Erstelle dein Profil
+            Create your profile
           </a>
-          , um Beiträge zu posten.
+          , to post.
         </div>
       )}
 
@@ -62,7 +62,7 @@ export default function Feed() {
         </div>
       ) : posts.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground text-sm">
-          Noch keine Beiträge. Sei der Erste!
+          No posts yet. Be the first!
         </div>
       ) : (
         <div className="space-y-4">
