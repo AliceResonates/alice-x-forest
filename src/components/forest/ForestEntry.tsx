@@ -74,62 +74,54 @@ export default function ForestEntry({ onSessionReady }: ForestEntryProps) {
           <Logo size="xl" />
         </div>
 
-        {/* Titel & Tagline */}
-        <div className="text-center space-y-2">
-          <h1 className="text-2xl font-semibold tracking-wide text-foreground/90">
-            Alice&thinsp;×&thinsp;Wald
-          </h1>
-          <p className="text-sm text-muted-foreground/80 italic max-w-xs leading-relaxed">
-            Ein stiller Begleiter.&ensp;Immer nah.
-          </p>
-        </div>
+{/* Title & Tagline */}
+<div className="text-center space-y-2">
+  <h1 className="text-2xl font-semibold tracking-wide text-foreground/90">
+    Alice&thinsp;×&thinsp;Forest
+  </h1>
+  <p className="text-sm text-muted-foreground/80 italic max-w-xs leading-relaxed">
+    A quiet companion.&ensp;Always close.
+  </p>
+</div>
 
-        {/* PLZ-Eingabe */}
-        <div className="flex flex-col items-center gap-2 w-full max-w-[13rem]">
-          <label
-            htmlFor="zip-input"
-            className="text-[11px] uppercase tracking-widest text-muted-foreground/60 select-none"
-          >
-            Dein Ort
-          </label>
-          <input
-            id="zip-input"
-            type="text"
-            inputMode="numeric"
-            maxLength={5}
-            placeholder="12345"
-            value={zip}
-            onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
-            onKeyDown={handleKeyDown}
-            autoFocus
-            className="w-full bg-transparent border-b border-border/60 focus:border-primary/70 text-center text-2xl tracking-[0.4em] text-foreground/90 placeholder:text-muted-foreground/25 focus:outline-none transition-colors duration-500 pb-1"
-          />
-        </div>
+{/* Location Input */}
+<div className="flex flex-col items-center gap-2 w-full max-w-[13rem]">
+  <label
+    htmlFor="zip-input"
+    className="text-[11px] uppercase tracking-widest text-muted-foreground/60 select-none"
+  >
+    Your Location
+  </label>
+  <input
+    id="zip-input"
+    type="text"
+    inputMode="numeric"
+    maxLength={5}
+    placeholder="12345"
+    value={zip}
+    onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
+    onKeyDown={handleKeyDown}
+    autoFocus
+    className="w-full bg-transparent border-b border-border/60 focus:border-primary/70 text-center text-2xl tracking-[0.4em] text-foreground/90 placeholder:text-muted-foreground/25 focus:outline-none transition-colors duration-500 pb-1"
+  />
+</div>
 
-        {/* CTA */}
-        <button
-          onClick={handleStart}
-          disabled={!ready}
-          className="group relative px-8 py-2.5 rounded-xl text-sm font-medium tracking-wide transition-all duration-500
-            bg-primary/20 border border-primary/30 text-primary/80
-            hover:bg-primary/35 hover:border-primary/60 hover:text-primary
-            disabled:opacity-30 disabled:cursor-not-allowed
-            focus:outline-none focus:ring-1 focus:ring-primary/40"
-          style={
-            ready
-              ? { boxShadow: "0 0 20px hsl(145 40% 42% / 0.2)" }
-              : undefined
-          }
-        >
-          <span className={loading ? "opacity-0" : ""}>
-            Den Wald betreten&ensp;↗
-          </span>
-          {loading && (
-            <span className="absolute inset-0 flex items-center justify-center text-primary/60 animate-pulse">
-              Pfad suchen …
-            </span>
-          )}
-        </button>
+{/* CTA */}
+<button
+  onClick={handleStart}
+  disabled={!ready}
+  className="group relative px-8 py-2.5 rounded-xl text-sm font-medium tracking-wide transition-all duration-500 bg-primary/20 border border-primary/30 text-primary/80 hover:bg-primary/35 hover:border-primary/60 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed focus:outline-none focus:ring-1 focus:ring-primary/40"
+  style={ready ? { boxShadow: "0 0 20px hsl(145 40% 42% / 0.2)" } : undefined}
+>
+  <span className={loading ? "opacity-0" : ""}>
+    Enter the Forest&ensp;↗
+  </span>
+  {loading && (
+    <span className="absolute inset-0 flex items-center justify-center text-primary/60 animate-pulse">
+      Seeking path …
+    </span>
+  )}
+</button>
 
         {/* Drei Punkte — Orientierungshilfe */}
         <p className="text-[10px] text-muted-foreground/35 tracking-widest select-none">
