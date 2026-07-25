@@ -1,0 +1,15 @@
+name: Alice Tick
+
+on:
+  schedule:
+    - cron: '0 * * * *' # stuendlich
+  workflow_dispatch: {} # manuelles Ausloesen zum Testen
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tick auslösen
+        run: |
+          curl -sf -X POST "https://alice-x-forest-api.fly.dev/api/alice/tick" \
+            -H "X-Alice-Tick-Secret: ${{ secrets.ALICE_TICK_SECRET }}"

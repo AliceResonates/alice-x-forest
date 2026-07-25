@@ -3,8 +3,11 @@ import cors from "cors";
 import { createMemoryRouter } from "./routes/memory.routes";
 import { createSessionsRouter } from "./routes/sessions.routes";
 import { createChatRouter } from "./routes/chat.routes";
+import { createTelegramRouter } from "./routes/telegram.routes";
+import { createAliceRouter } from "./routes/alice.routes";
 import { errorHandler } from "./middleware/error.middleware";
 import { MemoryService } from "./services/MemoryService";
+import { AliceStateService } from "./services/AliceStateService";
 import { Pool } from "pg";
 
 const pool = new Pool({
@@ -17,6 +20,7 @@ const pool = new Pool({
 });
 
 const memoryService = new MemoryService(pool);
+const aliceStateService = new AliceStateService(pool);
 
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "")
   .split(",")
@@ -29,7 +33,9 @@ export const createApp = () => {
   app.use(express.json());
   app.use("/api/memory", createMemoryRouter(memoryService));
   app.use("/api/sessions", createSessionsRouter());
-  app.use("/api/chat", createChatRouter(memoryService));
+  app.use("/api/chat", createChatRouter(memoryService, aliceStateService));
+  app.use("/api/telegram", createTelegramRouter(memoryService, aliceStateService));
+  app.use("/api/alice", createAliceRouter(memoryService, aliceStateService));
   app.use(errorHandler);
   return app;
 };
