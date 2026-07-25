@@ -1,3 +1,4 @@
+import MemoryBubble from '../components/sound/MemoryBubble';
 import React, { useState } from 'react';
 import { X, ChevronDown, ChevronUp } from 'lucide-react';
 import EchoLayer from '../components/forest/EchoLayer';
@@ -806,7 +807,8 @@ export default function ForestPage() {
 
       <MomentModal moment={activeMoment} onClose={() => setActiveId(null)} />
       <MemoryModal memory={activeMemory} onClose={() => setActiveMemory(null)} />
-
+      <MemoryBubble />
+      
       <style>{`
         @keyframes dignity-breathe {
           0%, 100% { transform: scale(1);    opacity: 0.18; }
