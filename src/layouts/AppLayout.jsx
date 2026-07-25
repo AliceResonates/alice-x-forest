@@ -51,8 +51,8 @@ export default function AppLayout() {
             <nav className="space-y-2 text-sm">
               {[
                 { label: 'Feed', to: '/feed' },
-                { label: 'Wald', to: '/forest' },
-                { label: 'Profil', to: '/profile' },
+                { label: 'Forest', to: '/forest' },
+                { label: 'Profile', to: '/profile' },
                 { label: 'Companions', to: '/companions' },
                 { label: 'Teams', to: '/teams' },
               ].map((item) => (
