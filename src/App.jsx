@@ -10,6 +10,7 @@ import PageNotFound from './pages/PageNotFound';
 import ChatRoomPage from './pages/ChatRoomPage';
 import ForestEntry from './components/forest/ForestEntry';
 import ForestPage from './pages/ForestPage';
+import ResearchPage from './pages/ResearchPage';
 
 function ForestEntryPage() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="companions" element={<CompanionsPage />} />
           <Route path="teams" element={<TeamsPage />} />
           <Route path="teams/:id" element={<TeamDetail />} />
+          <Route path="research" element={<ResearchPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>

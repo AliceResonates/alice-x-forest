@@ -55,6 +55,7 @@ export default function AppLayout() {
                 { label: 'Profile', to: '/profile' },
                 { label: 'Companions', to: '/companions' },
                 { label: 'Teams', to: '/teams' },
+                { label: 'Research', to: '/research' },
               ].map((item) => (
                 <NavLink
                   key={item.to}
