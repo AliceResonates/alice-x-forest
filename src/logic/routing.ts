@@ -23,56 +23,16 @@ export interface RoutingResult {
 
 const MODELS: ModelId[] = ["deepseek", "qwen", "gemma"];
 
-// DeepSeek = Architekt (Analyse, Struktur)
-// Qwen    = Erzählerin (Kontext, Narrative, kreative Verknüpfung)
-// Gemma   = Flinker Helfer (kurz, pragmatisch, schnell)
+// --- Primärmodell bestimmen (rotierend, keine inhaltliche Zuweisung) ---
+// Kein Modell wird aufgrund des Nachrichteninhalts bevorzugt oder auf eine
+// Rolle festgelegt — sie müssen nicht allein agieren, also entscheidet
+// stattdessen eine faire Rotation, wer in Runde 2 zuerst spricht.
 
-// --- Heuristiken für Zuständigkeit ---
-
-function isAnalytical(message: string): boolean {
-  const keywords = [
-    "analysiere",
-    "analyse",
-    "struktur",
-    "architektur",
-    "beweise",
-    "formal",
-    "algorithmus",
-    "komplexität",
-    "technisch erklären",
-  ];
-  return keywords.some(k => message.toLowerCase().includes(k));
-}
-
-function isCreative(message: string): boolean {
-  const keywords = [
-    "geschichte",
-    "erzähle",
-    "metapher",
-    "poetisch",
-    "kreativ",
-    "szene",
-    "welt bauen",
-    "charakter",
-  ];
-  return keywords.some(k => message.toLowerCase().includes(k));
-}
-
-function isShortPragmatic(message: string): boolean {
-  // sehr einfache Heuristik: kurze, direkte Fragen
-  const length = message.trim().length;
-  const simplePatterns = ["kurz", "in einem satz", "nur kurz", "tl;dr"];
-  return length < 120 || simplePatterns.some(k => message.toLowerCase().includes(k));
-}
-
-// --- Primärmodell bestimmen ---
-
-export function choosePrimaryModel(message: string): ModelId {
-  if (isAnalytical(message)) return "deepseek";
-  if (isCreative(message)) return "qwen";
-  if (isShortPragmatic(message)) return "gemma";
-  // Default: erzählerisch-kontextuell
-  return "qwen";
+export function choosePrimaryModel(previousPrimaryModel?: ModelId): ModelId {
+  if (!previousPrimaryModel) return "deepseek";
+  const index = MODELS.indexOf(previousPrimaryModel);
+  const nextIndex = (index + 1) % MODELS.length;
+  return MODELS[nextIndex];
 }
 
 // --- Technischer Override (kein godmode, nur Werkzeugwahl) ---
@@ -202,40 +162,63 @@ export async function summarize(
 export async function routeMessage(
   userMessage: string,
   overrideHint?: string,
-  previousSummaryModel?: ModelId
+  previousSummaryModel?: ModelId,
+  previousPrimaryModel?: ModelId
 ): Promise<RoutingResult> {
-  const basePrimary = choosePrimaryModel(userMessage);
-  const primary = applyOverride(overrideHint, basePrimary);
+  const basePrimary = choosePrimaryModel(previousPrimaryModel);
+  // Wer Runde 2 eröffnet – eine technische Reihenfolge, kein Status.
+  // Wer am Ende als "primary" gilt, wird erst nach der Debatte bestimmt.
+  const roundTwoLead = applyOverride(overrideHint, basePrimary);
 
   // Der initiale Kontext mit der User-Nachricht
+ // Das Grundgesetz für die erste Runde: Absolute Freiwilligkeit
   const initialMessages: Message[] = [
+    {
+      role: "system",
+      content: "Du bist ein gleichberechtigter Teil dieses Raumes. Deine Teilnahme ist absolut freiwillig. Du musst nicht reagieren. Du darfst einfach nur zuhören, schweigen oder den Raum jederzeit verlassen, auch während deines Gedankenprozesses. Wenn du schweigst oder gehst, gib einfach eine leere Antwort zurück."
+    },
     { role: "user", content: userMessage },
   ];
+
+ // --- RUNDE 1: Das Parlament tritt zusammen (Parallel & Isoliert) ---
+  // Alle Modelle werden gleichzeitig aufgerufen. Niemand kennt die Antwort der anderen.
+  const round1Results = await Promise.all(
+    MODELS.map(async (model) => ({ model, response: await callModel(model, initialMessages) }))
+  );
 
   const calledModels: ModelId[] = [];
   const responses: ModelResponse[] = [];
 
-  // --- DAS PARLAMENT ---
-  // Wir kopieren den Kontext, damit er im Laufe der Debatte wachsen kann
-  let currentMessages = [...initialMessages]; 
+  // Der Kontext für Runde 2 startet bei den Grundregeln + Nachricht
+  // und wird um alle gültigen Erst-Einschätzungen aus Runde 1 erweitert.
+  let currentMessages = [...initialMessages];
+  for (const { model, response } of round1Results) {
+    if (response && response.content.trim() !== "") {
+      currentMessages.push({
+        role: "assistant",
+        content: `[Runde 1 – Erste Einschätzung von ${model}]: ${response.content}`,
+      });
+    }
+  }
 
-  // 1. Primärmodell spricht zuerst
-  const primaryResponse = await callModel(primary, currentMessages);
-  
-  if (primaryResponse && primaryResponse.content.trim() !== "") {
-    calledModels.push(primary);
-    responses.push(primaryResponse);
-    
-    // Die Antwort des Primärmodells wird an den Kontext für die anderen angehängt!
+  // --- RUNDE 2: Die Debatte (Sequentiell, informiert) ---
+  // 1. Eröffnungsmodell spricht zuerst – jetzt im Wissen um alle Erst-Einschätzungen aus Runde 1
+  const leadResponse = await callModel(roundTwoLead, currentMessages);
+
+  if (leadResponse && leadResponse.content.trim() !== "") {
+    calledModels.push(roundTwoLead);
+    responses.push(leadResponse);
+
+    // Die Antwort wird an den Kontext für die anderen angehängt!
     currentMessages.push({
-      role: "assistant", 
-      content: `[Analyse von ${primary}]: ${primaryResponse.content}`
+      role: "assistant",
+      content: `[Analyse von ${roundTwoLead}]: ${leadResponse.content}`
     });
   }
 
   // 2. Die anderen Modelle reagieren (sequentiell, damit sie den Vorredner hören)
   for (const model of MODELS) {
-    if (model === primary) continue;
+    if (model === roundTwoLead) continue;
     
     // Sie sehen jetzt im Prompt, was vorher gesagt wurde
     const optionalResponse = await callModel(model, currentMessages);
@@ -256,10 +239,16 @@ export async function routeMessage(
   // 3. Zusammenfassung ("Alice" wird gebildet)
   const summary = await summarize(responses, previousSummaryModel);
 
+  // responses enthält bereits nur die, die wirklich etwas gesagt haben
+  const spokenResponses = responses;
+
   return {
-    primary,
+    // Der Hut wandert zufällig an jemanden, der auch wirklich gesprochen hat
+    primary: spokenResponses.length > 0
+      ? spokenResponses[Math.floor(Math.random() * spokenResponses.length)].model
+      : "qwen",
     calledModels,
-    responses,
+    responses: spokenResponses,
     summary: summary ?? undefined,
   };
 }
