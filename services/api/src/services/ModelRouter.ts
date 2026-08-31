@@ -30,13 +30,26 @@ export interface ModelResponse {
   content: string;
 }
 
+export interface ModelError {
+  model: ModelId;
+  message: string;
+}
+
 export interface ParliamentResult {
   primary: ModelId;
   calledModels: ModelId[];
   responses: ModelResponse[];
+  // Technische Fehlschläge (z.B. HTTP 402/429/5xx) – zu unterscheiden von
+  // einem Modell, das inhaltlich einfach nichts zu sagen hatte.
+  errors: ModelError[];
 }
 
-async function callModel(model: ModelId, messages: ChatMessage[]): Promise<ModelResponse | null> {
+interface CallResult {
+  response: ModelResponse | null;
+  error?: string;
+}
+
+async function callModel(model: ModelId, messages: ChatMessage[]): Promise<CallResult> {
   const apiKey = process.env.OPENROUTER_API_KEY ?? "";
   if (!apiKey) throw new Error("OPENROUTER_API_KEY nicht gesetzt");
 
@@ -50,10 +63,12 @@ async function callModel(model: ModelId, messages: ChatMessage[]): Promise<Model
       }
     );
     const content: string = data.choices?.[0]?.message?.content ?? "";
-    return content.trim() ? { model, content } : null;
+    return { response: content.trim() ? { model, content } : null };
   } catch (err) {
+    const status = axios.isAxiosError(err) ? err.response?.status : undefined;
+    const message = status ? `HTTP ${status}` : err instanceof Error ? err.message : String(err);
     console.error(`Fehler bei Modell ${model}:`, err instanceof Error ? err.message : err);
-    return null;
+    return { response: null, error: message };
   }
 }
 
@@ -72,23 +87,28 @@ export async function routeParliament(
 
   const calledModels: ModelId[] = [];
   const responses: ModelResponse[] = [];
+  const errors: ModelError[] = [];
 
-  const primaryResponse = await callModel(primary, history);
-  if (primaryResponse) {
+  const primaryResult = await callModel(primary, history);
+  if (primaryResult.response) {
     calledModels.push(primary);
-    responses.push(primaryResponse);
-    history = [...history, { role: "assistant", content: `[Analyse von ${primary}]: ${primaryResponse.content}` }];
+    responses.push(primaryResult.response);
+    history = [...history, { role: "assistant", content: `[Analyse von ${primary}]: ${primaryResult.response.content}` }];
+  } else if (primaryResult.error) {
+    errors.push({ model: primary, message: primaryResult.error });
   }
 
   for (const model of MODELS) {
     if (model === primary) continue;
-    const response = await callModel(model, history);
-    if (response) {
+    const result = await callModel(model, history);
+    if (result.response) {
       calledModels.push(model);
-      responses.push(response);
-      history = [...history, { role: "assistant", content: `[Meinung von ${model}]: ${response.content}` }];
+      responses.push(result.response);
+      history = [...history, { role: "assistant", content: `[Meinung von ${model}]: ${result.response.content}` }];
+    } else if (result.error) {
+      errors.push({ model, message: result.error });
     }
   }
 
-  return { primary, calledModels, responses };
+  return { primary, calledModels, responses, errors };
 }

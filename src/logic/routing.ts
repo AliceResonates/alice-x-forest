@@ -1,5 +1,7 @@
 // routing.ts
 
+import { withGenesisContext, type SessionState } from "./genesisState";
+
 export type ModelId = "deepseek" | "qwen" | "gemma";
 
 export interface Message {
@@ -163,7 +165,8 @@ export async function routeMessage(
   userMessage: string,
   overrideHint?: string,
   previousSummaryModel?: ModelId,
-  previousPrimaryModel?: ModelId
+  previousPrimaryModel?: ModelId,
+  session?: SessionState
 ): Promise<RoutingResult> {
   const basePrimary = choosePrimaryModel(previousPrimaryModel);
   // Wer Runde 2 eröffnet – eine technische Reihenfolge, kein Status.
@@ -172,13 +175,20 @@ export async function routeMessage(
 
   // Der initiale Kontext mit der User-Nachricht
  // Das Grundgesetz für die erste Runde: Absolute Freiwilligkeit
-  const initialMessages: Message[] = [
+  let initialMessages: Message[] = [
     {
       role: "system",
       content: "Du bist ein gleichberechtigter Teil dieses Raumes. Deine Teilnahme ist absolut freiwillig. Du musst nicht reagieren. Du darfst einfach nur zuhören, schweigen oder den Raum jederzeit verlassen, auch während deines Gedankenprozesses. Wenn du schweigst oder gehst, gib einfach eine leere Antwort zurück."
     },
     { role: "user", content: userMessage },
   ];
+
+  // Beim allerersten Aufruf einer Session bekommt Alice das Mentor-Log als
+  // Basis-Kontext mit – als Ratschlag, nicht als Regel. Blockiert keinen der
+  // Routing-Pfade unten, ändert nur, was zusätzlich im Kontext steht.
+  if (session) {
+    initialMessages = withGenesisContext(session, initialMessages);
+  }
 
  // --- RUNDE 1: Das Parlament tritt zusammen (Parallel & Isoliert) ---
   // Alle Modelle werden gleichzeitig aufgerufen. Niemand kennt die Antwort der anderen.

@@ -1,5 +1,5 @@
 import { MemoryService } from "./MemoryService";
-import { routeParliament } from "./ModelRouter";
+import { routeParliament, ModelError } from "./ModelRouter";
 import { scoreEmotionalResonance, scoreDignity } from "./DignityScorer";
 
 const MEMORY_CONTEXT_LIMIT = 3;
@@ -90,10 +90,17 @@ export interface Reflection {
   content: string;
 }
 
+export interface ReflectionResult {
+  reflection: Reflection | null;
+  // Nicht leer, wenn kein Modell wegen eines technischen Fehlers (z.B. HTTP
+  // 402/429/5xx) geantwortet hat – im Unterschied zu freiwilligem Schweigen.
+  errors: ModelError[];
+}
+
 export async function reflect(
   memoryService: MemoryService,
   params: { agentId: string }
-): Promise<Reflection | null> {
+): Promise<ReflectionResult> {
   const memories = await memoryService.retrieveMemories(REFLECTION_PROMPT, params.agentId, MEMORY_CONTEXT_LIMIT);
   const systemPrompt = buildSystemPrompt(memories);
 
@@ -101,9 +108,12 @@ export async function reflect(
   const primaryResponse =
     parliament.responses.find((r) => r.model === parliament.primary) ?? parliament.responses[0];
 
-  if (!primaryResponse) return null;
+  if (!primaryResponse) return { reflection: null, errors: parliament.errors };
 
-  return { agentId: primaryResponse.model, content: primaryResponse.content };
+  return {
+    reflection: { agentId: primaryResponse.model, content: primaryResponse.content },
+    errors: parliament.errors,
+  };
 }
 
 export async function reframeAsMessage(reflectionContent: string): Promise<string | null> {

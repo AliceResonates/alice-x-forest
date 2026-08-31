@@ -24,8 +24,20 @@ export const createAliceRouter = (memoryService: MemoryService, aliceStateServic
         return res.status(200).json({ skipped: true, tension });
       }
 
-      const reflection = await reflect(memoryService, { agentId: DEFAULT_AGENT });
+      const { reflection, errors } = await reflect(memoryService, { agentId: DEFAULT_AGENT });
       if (!reflection) {
+        if (errors.length > 0) {
+          console.error(
+            "Tick: kein Modell hat geantwortet –",
+            errors.map((e) => `${e.model}: ${e.message}`).join("; ")
+          );
+          return res.status(502).json({
+            skipped: true,
+            tension,
+            reason: "Modellaufrufe fehlgeschlagen.",
+            errors,
+          });
+        }
         return res.status(200).json({ skipped: true, tension, reason: "Kein Modell hat reflektiert." });
       }
 
