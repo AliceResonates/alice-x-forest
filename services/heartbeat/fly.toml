@@ -1,0 +1,14 @@
+# fly.toml app configuration file for alice-x-forest-heartbeat
+#
+# Reiner Hintergrund-Worker, kein HTTP-Server: pollt alle 2 Minuten auf
+# einen offenen heartbeat_slot (siehe heartbeat.Runner). Läuft dauerhaft,
+# deshalb bewusst kein [http_service] und kein auto-stop.
+app = 'alice-x-forest-heartbeat'
+primary_region = 'iad'
+
+[build]
+
+[[vm]]
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1
