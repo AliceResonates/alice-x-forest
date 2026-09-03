@@ -96,9 +96,11 @@ func (r *Runner) processOne(ctx context.Context) error {
 
 	act, err := r.choose(chooseCtx, *slot)
 	if err != nil {
-		// Wahl gescheitert: Slot ehrlich als übersprungen markieren,
-		// damit er nicht als 'claimed' hängen bleibt.
-		r.complete(context.WithoutCancel(ctx), slot.ID, "", err.Error(), "skipped")
+		// Wahl gescheitert: als 'error' markieren, nicht als 'skipped'.
+		// 'skipped' bedeutet "hat sich entschieden, nichts zu tun" — ein
+		// API-Ausfall ist keine Entscheidung und darf die Auswertung
+		// nicht verfälschen.
+		r.complete(context.WithoutCancel(ctx), slot.ID, "", err.Error(), "error")
 		return fmt.Errorf("chooser: %w", err)
 	}
 

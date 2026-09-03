@@ -76,7 +76,8 @@ func main() {
 	}
 
 	llm := openrouter.New(openrouterKey, model)
-	chooser := heartbeat.NewJSONChooser(llm)
+	eff := heartbeat.NewEffects(pool, llm, log, "alice")
+	chooser := heartbeat.WithEffects(heartbeat.NewJSONChooserWithContext(llm, pool), eff)
 	r := heartbeat.NewRunner(pool, chooser, log)
 
 	log.Info("heartbeat service startet", "model", model)
