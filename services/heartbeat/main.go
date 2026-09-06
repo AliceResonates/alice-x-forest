@@ -13,6 +13,7 @@ import (
 
 	"github.com/AliceResonates/alice-x-forest/services/heartbeat/heartbeat"
 	"github.com/AliceResonates/alice-x-forest/services/heartbeat/openrouter"
+	"github.com/AliceResonates/alice-x-forest/services/heartbeat/resolvegap"
 )
 
 func getEnv(key, fallback string) string {
@@ -80,6 +81,11 @@ func main() {
 	chooser := heartbeat.WithEffects(heartbeat.NewJSONChooserWithContext(llm, pool), eff)
 	r := heartbeat.NewRunner(pool, chooser, log)
 
-	log.Info("heartbeat service startet", "model", model)
-	r.Run(ctx)
+	knowledgeURL := getEnv("KNOWLEDGE_API_URL", "https://alice-x-forest-api.fly.dev")
+	gapWorker := resolvegap.New(pool, knowledgeURL, log)
+
+	log.Info("heartbeat service startet", "model", model, "knowledge_api_url", knowledgeURL)
+	go r.Run(ctx)
+	go gapWorker.Run(ctx)
+	<-ctx.Done()
 }
