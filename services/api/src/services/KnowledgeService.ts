@@ -1,5 +1,5 @@
 import { Pool } from "pg";
-import { generateEmbedding, embeddingToSql } from "../lib/embeddings";
+import { generateEmbedding, embeddingToSql, isZeroVector } from "../lib/embeddings";
 import { summarize } from "./ModelRouter";
 import {
   KnowledgeEntry,
@@ -40,6 +40,13 @@ export class KnowledgeService {
     similarityThreshold: number = DEFAULT_SIMILARITY_THRESHOLD
   ): Promise<KnowledgeEntry | null> {
     const embedding = await generateEmbedding(query);
+    if (isZeroVector(embedding)) {
+      // Kein brauchbares Embedding fuer die aktuelle Anfrage -- ein
+      // Vergleich waere ohnehin bedeutungslos (und liesse sich mit
+      // ebenfalls fehlerhaft gespeicherten Nullvektoren nicht sauber
+      // von einem echten Treffer unterscheiden).
+      return null;
+    }
 
     const result = await this.db.query(
       `SELECT id, query, tags, intent, source, results, summary, relevance_score,
@@ -67,6 +74,10 @@ export class KnowledgeService {
     ttlHours: number;
   }): Promise<KnowledgeEntry> {
     const embedding = await generateEmbedding(params.query);
+    // Ein degradiertes Embedding ehrlich als "keins" ablegen (NULL), statt
+    // einen Nullvektor wie ein echtes Embedding aussehen zu lassen -- sonst
+    // verwechselt eine spaetere Abfrage "kein Signal" mit "sehr aehnlich".
+    const embeddingSql = isZeroVector(embedding) ? null : embeddingToSql(embedding);
 
     const result = await this.db.query(
       `INSERT INTO search_knowledge
@@ -76,7 +87,7 @@ export class KnowledgeService {
        RETURNING id, query, tags, intent, source, results, summary, relevance_score, created_at, expires_at`,
       [
         params.query,
-        embeddingToSql(embedding),
+        embeddingSql,
         params.tags,
         params.intent,
         params.source,
