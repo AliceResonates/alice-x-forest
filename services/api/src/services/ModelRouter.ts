@@ -112,3 +112,17 @@ export async function routeParliament(
 
   return { primary, calledModels, responses, errors };
 }
+
+// Ein einzelner, günstiger Modellaufruf für mechanische Aufgaben wie
+// Zusammenfassen — kein Grund, dafür das ganze Parlament zu bemühen.
+export async function summarize(
+  instruction: string,
+  content: string,
+  model: ModelId = "gemma"
+): Promise<string | null> {
+  const result = await callModel(model, [
+    { role: "system", content: instruction },
+    { role: "user", content },
+  ]);
+  return result.response?.content ?? null;
+}

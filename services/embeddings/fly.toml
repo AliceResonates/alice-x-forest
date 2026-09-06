@@ -1,0 +1,22 @@
+# fly.toml app configuration file for alice-x-forest-embeddings
+#
+# Embedding-Dienst (Flask + sentence-transformers, all-MiniLM-L6-v2,
+# 384 Dimensionen) fuer MemoryService und KnowledgeService. Skaliert
+# bewusst auf 0 herunter, wenn niemand embedded — kein Dauerbetrieb noetig.
+app = 'alice-x-forest-embeddings'
+primary_region = 'iad'
+
+[build]
+
+[http_service]
+  internal_port = 5000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1024mb'
+  cpu_kind = 'shared'
+  cpus = 1
