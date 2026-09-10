@@ -25,15 +25,17 @@ import (
 
 const (
 	maxAttempts = 5
+	actionName  = "resolve_gap"
 
-	// HTTP-Budget fuer den Suchaufruf. Muss deutlich unter
-	// visibilityTimeout bleiben, sonst kann ein zweiter Worker denselben
-	// Intent erneut claimen, waehrend der erste noch im Aufruf haengt.
-	// Bewusster Startwert, nicht in Stein gemeisselt -- neu bewerten,
-	// falls Embedding-Kaltstarts/Tavily regelmaessig in die Naehe kommen.
-	searchTimeout      = 90 * time.Second
-	visibilityTimeout  = 5 * time.Minute
-	pollInterval       = 2 * time.Minute
+	// HTTP-Budget fuer den Suchaufruf. Muss deutlich unter staleMinutes
+	// bleiben, sonst requeued claim_pending_intents' Stale-Recovery den
+	// Intent, waehrend der erste Versuch noch im Aufruf haengt, und ein
+	// zweiter Worker greift ihn parallel auf. Bewusster Startwert, nicht
+	// in Stein gemeisselt -- neu bewerten, falls Embedding-Kaltstarts/
+	// Tavily regelmaessig in die Naehe kommen.
+	searchTimeout = 90 * time.Second
+	staleMinutes  = 5
+	pollInterval  = 2 * time.Minute
 )
 
 type Worker struct {
@@ -133,16 +135,15 @@ func (w *Worker) processOne(ctx context.Context) error {
 }
 
 func (w *Worker) claim(ctx context.Context) (*claimedIntent, error) {
-	// Explizit benannte Parameter der NEUEN Signatur -- damit ist der
-	// Aufruf eindeutig, auch waehrend die aeltere Ueberladung
-	// claim_pending_intents(batch_size int) fuer den (aktuell nicht
-	// laufenden) Node-Worker unangetastet bleibt. Legacy overload --
-	// retained for existing worker compatibility; new consumers MUST
-	// use the p_* signature.
+	// Dritte, generische Ueberladung (von Fable/Roots eingefuehrt):
+	// claim_pending_intents(p_action, p_batch, p_stale_minutes). Filtert
+	// serverseitig auf payload->>'action' = p_action, damit sich
+	// resolve_gap und save_memory nie gegenseitig die Queue wegschnappen.
+	// Erhoeht attempts selbst beim Claim -- siehe fail().
 	rows, err := w.db.Query(ctx,
 		`select id, session_id, payload, attempts
-		   from claim_pending_intents(p_batch_size := 1, p_visibility_timeout := $1)`,
-		visibilityTimeout,
+		   from claim_pending_intents(p_action := $1, p_batch := 1, p_stale_minutes := $2)`,
+		actionName, staleMinutes,
 	)
 	if err != nil {
 		return nil, err
@@ -256,34 +257,37 @@ func (w *Worker) complete(ctx context.Context, intent *claimedIntent, gapID, ses
 // selbst wieder auf, sobald next_attempt_at erreicht ist. Erst danach
 // ist er endgueltig 'failed'.
 func (w *Worker) fail(ctx context.Context, intent *claimedIntent, reason string) error {
-	// claim_pending_intents(p_batch_size, p_visibility_timeout) erhoeht
-	// attempts NICHT selbst (das tut nur die aeltere Ueberladung) -- wir
-	// muessen es hier explizit tun, sonst wird maxAttempts nie erreicht
-	// und ein dauerhaft kaputter Intent wuerde ewig retryen.
-	attemptsSoFar := intent.Attempts + 1
-
-	if attemptsSoFar >= maxAttempts {
+	// claim_pending_intents(p_action, p_batch, p_stale_minutes) erhoeht
+	// attempts bereits selbst beim Claim (anders als die aeltere
+	// (p_batch_size, p_visibility_timeout)-Ueberladung) -- intent.Attempts
+	// ist hier also schon der aktuelle Versuchszaehler. Hier NICHT nochmal
+	// erhoehen, sonst zaehlt jeder Fehlschlag doppelt.
+	if intent.Attempts >= maxAttempts {
 		_, err := w.db.Exec(ctx,
-			`update intent_inbox set status = 'failed', last_error = $1, attempts = $2
-			 where id = $3 and status = 'processing'`,
-			reason, attemptsSoFar, intent.ID,
+			`update intent_inbox set status = 'failed', last_error = $1
+			 where id = $2 and status = 'processing'`,
+			reason, intent.ID,
 		)
-		w.log.Error("resolve_gap endgueltig fehlgeschlagen", "intent", intent.ID, "attempts", attemptsSoFar, "err", reason)
+		w.log.Error("resolve_gap endgueltig fehlgeschlagen", "intent", intent.ID, "attempts", intent.Attempts, "err", reason)
 		return err
 	}
 
-	backoff := time.Duration(1<<uint(intent.Attempts)) * 30 * time.Second // 30s, 60s, 120s, 240s, 480s
+	exponent := intent.Attempts - 1
+	if exponent < 0 {
+		exponent = 0
+	}
+	backoff := time.Duration(1<<uint(exponent)) * 30 * time.Second // 30s, 60s, 120s, 240s, 480s
 	if backoff > 10*time.Minute {
 		backoff = 10 * time.Minute
 	}
 
 	_, err := w.db.Exec(ctx,
 		`update intent_inbox
-		    set status = 'pending', last_error = $1, next_attempt_at = now() + $2::interval, attempts = $3
-		  where id = $4 and status = 'processing'`,
-		reason, backoff.String(), attemptsSoFar, intent.ID,
+		    set status = 'pending', last_error = $1, next_attempt_at = now() + $2::interval
+		  where id = $3 and status = 'processing'`,
+		reason, backoff.String(), intent.ID,
 	)
-	w.log.Error("resolve_gap fehlgeschlagen, retry geplant", "intent", intent.ID, "versuch", attemptsSoFar, "in", backoff, "err", reason)
+	w.log.Error("resolve_gap fehlgeschlagen, retry geplant", "intent", intent.ID, "versuch", intent.Attempts, "in", backoff, "err", reason)
 	return err
 }
 
