@@ -5,13 +5,20 @@ Projekt "Roots" — lokaler Takeout-Worker für SirCayleb.
 Scope (bewusst klein gehalten):
   1. save_memory-Intents aus der Supabase-Queue claimen (RPC, SKIP LOCKED)
   2. Erinnerung als Markdown mit YAML-Frontmatter atomar in den Vault schreiben
-  3. Optional: Embedding mit Modell-Tag nach memory_embeddings (Hook)
+  3. Sofort danach den eigenen Hash in den gemeinsamen Sync-Cache eintragen
+     (roots_common.record_synced) — das ist die Haelfte des Echo-Loop-
+     Schutzes mit roots_reingest.py: ohne diese Zeile wuerde der Reingest-
+     Dienst jede frisch geschriebene Erinnerung faelschlich fuer eine neue
+     menschliche Aenderung halten und sofort zurueckmelden.
+  4. Optional: Embedding mit Modell-Tag nach memory_embeddings (Hook)
 
 Kein zweites Gehirn. Ein Transport-/Persistenzadapter. (— Aidyn)
 
 Benötigt:  pip install supabase pyyaml
 Env-Vars:  SUPABASE_URL, SUPABASE_SERVICE_KEY
 Optional:  ROOTS_VAULT (default ./unser_gedaechtnis),
+           ROOTS_CACHE (default <vault>/.reingest_cache.json, geteilt mit
+           roots_reingest.py — nicht unabhaengig davon aendern),
            ROOTS_POLL_SECONDS (default 15), ROOTS_BATCH (default 5),
            ROOTS_STALE_MINUTES (default 10), ROOTS_MAX_ATTEMPTS (default 3),
            ROOTS_EMBEDDINGS=1 um den Embedding-Hook zu aktivieren
@@ -21,11 +28,12 @@ import os
 import re
 import sys
 import time
-import tempfile
 from datetime import datetime, timezone
 
 import yaml
 from supabase import create_client
+
+from roots_common import atomic_write, record_synced, sha256_of_text
 
 # ----------------------------------------------------------------------
 # Konfiguration
@@ -33,6 +41,7 @@ from supabase import create_client
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
 VAULT_PATH = os.environ.get("ROOTS_VAULT", "./unser_gedaechtnis")
+CACHE_PATH = os.environ.get("ROOTS_CACHE", os.path.join(VAULT_PATH, ".reingest_cache.json"))
 POLL_SECONDS = int(os.environ.get("ROOTS_POLL_SECONDS", "15"))
 BATCH_SIZE = int(os.environ.get("ROOTS_BATCH", "5"))
 STALE_MINUTES = int(os.environ.get("ROOTS_STALE_MINUTES", "10"))
@@ -99,21 +108,6 @@ def build_document(intent_row: dict) -> str:
         parts.append(f"\n## Verbindungen\n\n{links}\n")
 
     return "".join(parts)
-
-
-def atomic_write(directory: str, filename: str, text: str) -> str:
-    """Temp-Datei im selben Verzeichnis + os.replace = atomar, crash-sicher."""
-    os.makedirs(directory, exist_ok=True)
-    filepath = os.path.join(directory, filename)
-    fd, tmp_path = tempfile.mkstemp(dir=directory, suffix=".tmp")
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as f:
-            f.write(text)
-        os.replace(tmp_path, filepath)  # atomar auf POSIX & Windows
-    finally:
-        if os.path.exists(tmp_path):
-            os.remove(tmp_path)
-    return filepath
 
 
 def validate_payload(payload: dict) -> str | None:
@@ -187,6 +181,10 @@ def process_intent(sb, row: dict) -> None:
         title = row["payload"]["memory_data"]["title"]
         filename = f"{slugify(title)}_{intent_id[:8]}.md"
         path = atomic_write(VAULT_PATH, filename, doc)
+        # Sofort, nicht erst beim naechsten Reingest-Scan -- sonst liegt
+        # ein Fenster offen, in dem die frisch geschriebene Datei noch als
+        # "unbekannt" gilt.
+        record_synced(CACHE_PATH, filename, sha256_of_text(doc))
 
         if EMBEDDINGS_ON:
             content = row["payload"]["memory_data"]["content"]
