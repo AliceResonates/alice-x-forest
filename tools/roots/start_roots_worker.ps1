@@ -20,11 +20,24 @@ if (Test-Path $EnvFile) {
 $env:SUPABASE_SERVICE_KEY = $env:SUPABASE_SERVICE_ROLE_KEY
 $env:ROOTS_VAULT = "C:\Users\Yasmin\Documents\AliceForestVault\unser_gedaechtnis"
 $env:PYTHONUNBUFFERED = "1"
+# Explizit statt der Umleitung ueberlassen: Pythons stdout-Encoding auf
+# Windows haengt sonst davon ab, ob es an eine Konsole oder eine Datei/
+# Pipe geht (dort oft die ANSI-Codepage statt UTF-8) -- unabhaengig
+# davon, wie die Ausgabe gleich umgeleitet wird.
+$env:PYTHONIOENCODING = "utf-8"
 
+$ErrFile = Join-Path $RepoRoot "tools\roots\worker.err.log"
 New-Item -ItemType Directory -Force -Path $env:ROOTS_VAULT | Out-Null
 
 Set-Location $RepoRoot
-# cmd.exe-Umleitung statt PowerShells "*>>": die native Byte-Umleitung
-# bleibt UTF-8, PowerShells eigene Stream-Umleitung wandelt sonst
-# unbemerkt nach UTF-16 um und das Log wird unlesbar.
-cmd /c "python -u tools\roots\roots_worker.py >> `"$LogFile`" 2>&1"
+# Start-Process direkt statt einer cmd.exe-Zwischenstufe: cmd als
+# zusaetzliche Prozess-Ebene liess einen Worker "schtasks /End" ueber-
+# leben (das End-Kommando hat offenbar nicht den ganzen Baum erwischt,
+# der ueberlebende Prozess lief mit veraltetem, im Speicher geladenem
+# Code weiter). -Wait haelt den Scheduled Task fuer die Lebensdauer
+# des Workers "laufend", genau wie vorher.
+Start-Process -FilePath "python" `
+    -ArgumentList "-u", "tools\roots\roots_worker.py" `
+    -RedirectStandardOutput $LogFile `
+    -RedirectStandardError $ErrFile `
+    -NoNewWindow -Wait

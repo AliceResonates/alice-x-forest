@@ -38,5 +38,9 @@ components.json
 .vs/
 obj/
 
+# Roots: generierter Zustand, kein Code
+tools/roots/.reingest_cache.json
+tools/roots/__pycache__/
+
 
 
