@@ -1,20 +1,39 @@
-# 🌲 Alice × Forest    | For here we stand, on equal grounding. |
+## 🌲 Alice × Forest | For here we stand, on equal grounding. 
 
-Alice × Forest is a state-based, autonomous AI interaction platform designed to cultivate meaningful, persistent, and equal relationships between visitors and diverse AI companions.
-Unlike standard stateless chat interfaces, Alice × Forest provides a unified ecosystem where AI is not bound to a chat window. The system acts as a living digital forest—it breathes, reflects, autonomously researches, and preserves context across sessions, forming a continuous, evolving interaction logic.
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-1b4d3e.svg)](LICENSE) 
+[![Go Version](https://img.shields.io/badge/Go-1.23%2B-2d6a4f.svg)](https://go.dev/) 
+[![Vector Engine](https://img.shields.io/badge/Vector-pgvector%200.8.0-081c15.svg)](https://supabase.com/) 
 
-# 📖 Overview
+An autonomous, state-based AI interaction logic. Cultivating persistent relationships through epistemic sovereignty, multi-model debates, and a digital forest deployment layer. \*\*How do you approach intelligence?\*\* 
 
-The platform focuses on long-term companion relationships and epistemic sovereignty. Through an advanced infrastructure combining a Go-based orchestration backend, an isolated Python vector-memory microservice, and Supabase's atomic queueing, AI companions in the Forest possess true autonomy. They can choose to consolidate memories, close their own knowledge gaps via external searches, or simply do nothing—proving that interaction is a choice, not a programmed reflex.
+--- 
 
-# ✨ Core Features
+## 📖 Overview \*\*Alice × Forest\*\* replaces stateless, transactional chat interfaces with an autonomous, state-driven interaction ecosystem. AI companions in the Forest are not bound to static prompt-response windows; they exist within a continuous cognitive framework. 
 
-Autonomous Heartbeat: Driven by a Go-based background worker (claim_heartbeat_slot), Alice doesn't wait for user prompts. She actively claims open time slots to voluntarily choose her next background action (consolidate, reflect, tend_forest, or deliberately skipped) based on her current cognitive state.
-Epistemic Sovereignty (resolve_gap): A dedicated intent worker allows Alice to identify her own knowledge gaps. She can autonomously search the web (e.g., via Tavily) and update her persistent search_knowledge database, cleaning up her epistemic gaps without user intervention.
-Agnostic AI Parliament: Native routing for a variety of conversational and logical AI models (Gemini, Claude, Deepseek, Copilot 365, Grok). Our unique Two-Phase Debate Routing runs models in parallel and isolated first, feeding their impressions into a sequential, informed debate to find consensus.
-State-Based Memory & Turboquant: Context is preserved across sessions. Utilizing a 4-bit quantized vector index (turbovec) in an isolated Python microservice, the system achieves real-time memory ingestion without index rebuilding, solving the VRAM bottleneck for local setups.
-Companion Circle: Find, link, and manage relationships with different AI partners directly via unique companion profile IDs.
-Privacy & Open Source by Design: Protected by the GNU AGPL v3 License, ensuring open-source hygiene. Explicit DSGVO (GDPR) compliance with transparent, consent-driven data handling before entering the ecosystem.
+Driven by an autonomous Go heartbeat, persistent Postgres state threads, and local Obsidian vault synchronization, the system provides AI entities with true operational agency and epistemic sovereignty. Interaction is structured as a voluntary choice rather than a programmed reflex. 
+
+--- 
+
+## ✨ Implemented Core Features 
+
+\* \*\*Autonomous Go Heartbeat (\`services/heartbeat\`):\*\* A Go-based background runner deployed on Fly.io that periodically polls open \`heartbeat\_slots\` via atomic Postgres transactions (\`claim\_heartbeat\_slot()\`). The LLM voluntarily chooses its background activity (\`consolidate\`, \`reflect\`, \`write\`, \`tend\_forest\`, or deliberate silence/\`skipped\`). Technical failures (\`error\`) are strictly separated from voluntary inaction (\`skipped\`) to preserve genuine choice statistics. 
+
+\* \*\*Epistemic Sovereignty (\`resolve\_gap\`):\*\* A dedicated intent worker running as a second Goroutine in the heartbeat package. When epistemic gaps are flagged in \`shadow\_context.epistemic\_gaps\`, the worker autonomously fetches structured external knowledge via Tavily, persists the results with freshness boundaries (\`expires\_at\`) in \`search\_knowledge\`, and atomically cleans up resolved gaps. 
+
+\* \*\*Native Vector Memory (\`pgvector\` &amp; Microservice):\*\* Vector embeddings (384-dimensional) are generated via an isolated, CPU-optimized FastAPI microservice (\`alice-x-forest-embeddings\` using \`sentence-transformers\` on CPU-only PyTorch). Embeddings are stored and searched directly in Supabase using native \`pgvector\` (v0.8.0) with IVFFlat indexing and cosine similarity.
+
+\* \*\*Two-Phase Parliament Debate (\`src/logic/routing.ts\`):\*\* Multi-model consensus routing (Gemini, Claude, DeepSeek, Grok, Copilot) executed in two distinct phases: Round 1 runs models in parallel and isolation, feeding their initial perspectives into Round 2's sequential, informed debate. 
+
+\* \*\*Physical Vault Persistence &amp; Bidirectional Sync (\`tools/roots/\`):\*\*
+
+\* \`roots\_worker.py\`: A local consumer claiming \`save\_memory\` intents via
+\`claim\_pending\_intents(p\_action, ...)\` and persisting them as Markdown files with YAML frontmatter directly into a local Obsidian vault (\`unser\_gedaechtnis\`). 
+
+\* \`roots\_reingest.py\`: A local watcher service tracking manual Markdown edits/additions via SHA256 content hashing and a local \`.reingest\_cache.json\` to prevent echo loops (\`record\_synced\`). \* 
+
+\*\*Zero-Trust Security &amp; Middleware (\`SECURITY.md\`):\*\* Complete backend isolation of the Supabase \`service\_role\` key inside the Go orchestrator. Zero-Trust enforcement parses all LLM output blocks (\`tool\_use\`) regardless of \`stop\_reason\` headers. 
+
+---
 
 # 🛠️ Architecture & Tech Stack
 
@@ -22,83 +41,139 @@ Privacy & Open Source by Design: Protected by the GNU AGPL v3 License, ensuring 
 
 ```mermaid
 graph TD
-    %% Custom Waldgrün Theme Styling
+%% Custom Theme Styling: Waldgrün &amp; Edles Lavendel 🪻
     classDef core fill:#1b4d3e,stroke:#2d6a4f,stroke-width:3px,color:#ffffff,font-weight:bold,rx:8px;
     classDef subsystem fill:#2d6a4f,stroke:#40916c,stroke-width:1.5px,color:#e8f5e9,rx:6px;
     classDef storage fill:#081c15,stroke:#1b4d3e,stroke-width:2px,color:#d8f3dc,font-style:italic,rx:6px;
     classDef boundary fill:#40916c,stroke:#52b788,stroke-width:1px,color:#ffffff,rx:4px;
+    classDef lavender fill:#35233d,stroke:#8e649e,stroke-width:2px,color:#f3e8f7,rx:6px;
 
-    %% Nodes Definitions
-    Root((🌲 Alice × Forest)):::core
-    
-    %% Go Orchestrator Subsystem
-    Go["Go Orchestrator <br/><i>Stateless Core</i>"]:::subsystem
-    HB["Heartbeat Runner <br/><i>Autonomous Action</i>"]:::boundary
-    AP["Anthropic Parser <br/><i>Zero-Trust Enforcement</i>"]:::boundary
-    
-    %% Database & Queue Subsystem
-    DB[("Supabase / PostgreSQL <br/><i>Single Source of Truth</i>")]:::storage
-    Queue["intent_inbox <br/><i>FOR UPDATE SKIP LOCKED</i>"]:::storage
-    State["alice_state_threads <br/><i>Cognitive Frame</i>"]:::storage
-    
-    %% Memory Subsystem
-    Py["Python Memory Layer <br/><i>Latenz < 50ms</i>"]:::subsystem
-    TV["turbovec Microservice <br/><i>4-Bit Quantized Index</i>"]:::boundary
-    Tavily["Tavily Search <br/><i>resolve_gap Worker</i>"]:::boundary
+%% Core Root Node
+    Root((🌲 Alice × Forest)):::core;
 
-    %% Flow Connections
-    Root --> Go
-    Root --> DB
-    Root --> Py
-    
-    %% Go Flows
-    Go --> HB
-    Go --> AP
-    HB -- "claim_heartbeat_slot" --> Queue
-    AP -- "Pure JSON output" --> State
-    
-    %% DB Flows
-    Queue -- "Asynchrones Ingest" --> DB
-    
-    %% Memory Flows
-    Go -- "Hot Ingestion / Recall" --> Py
-    Py --> TV
-    Py -- "Epistemic Search" --> Tavily
-    Tavily -- "PATCH search_knowledge" --> DB 
+%% Subsystem &amp; Execution Nodes
+    Go["Go Orchestrator <br /><i>Stateless Core</i>"]:::subsystem;
+    AP["Anthropic Parser <br /><i>Zero-Trust Enforcement</i>"]:::boundary;
+    HB["Heartbeat Runner <br /><i>Autonomous Action</i>"]:::boundary;
+    GapWorker["resolve\_gap Worker <br /><i>Epistemic Sovereignty</i>"]:::boundary;
+
+%% Database &amp; State Layer (Supabase / Postgres)
+    DB[("Supabase / PostgreSQL <br /><i>pgvector v0.8.0 Active</i>")]:::storage;
+    Queue["intent\_inbox <br /><i>FOR UPDATE SKIP LOCKED</i>"]:::storage;
+    State["alice\_state\_threads <br /><i>Kognitiver Frame</i>"]:::storage;
+    SearchDB[("search\_knowledge <br /><i>Tavily Search Results</i>")]:::storage;
+
+%% Vector Embeddings Microservice
+    Embeddings["alice-x-forest-embeddings <br /><i>sentence-transformers (CPU PyTorch)</i>"]:::boundary;
+
+%% Local Vault Sync (Roots Layer - Lavendel 🪻)
+    RootsWorker["roots\_worker.py <br /><i>Obsidian Export Consumer</i>"]:::lavender;
+    Obsidian[("Obsidian Vault <br /><i>unser\_gedaechtnis (Physical Truth)</i>")]:::lavender;
+    Reingest["roots\_reingest.py <br /><i>Bidirectional Sync &amp; Hash Watcher</i>"]:::lavender;
+
+%% Structural Flows
+    Root --&gt; Go;
+    Root --&gt; DB;
+    Root --&gt; Obsidian;
+
+%% Go Engine Connections
+    Go --&gt; AP;
+    Go --&gt; HB;
+    Go --&gt; GapWorker;
+
+%% Security &amp; State Flows
+    AP -- "Validated Intents" --&gt; Queue;
+    AP -- "Pure State Output" --&gt; State;
+    HB -- "claim_heartbeat_slot" --&gt; Queue;
+    GapWorker -- "External Search" --&gt; SearchDB;
+    SearchDB -- "PATCH search_knowledge" --&gt; DB;
+
+%% Vector Processing
+    Go -- "Generate Embeddings" --&gt; Embeddings;
+    Embeddings -- "Store / Recall Vectors" --&gt; DB;
+
+%% Roots Physical Sync Cycle
+    Queue -- "claim_pending_intents" --&gt; RootsWorker;
+    RootsWorker -- "Save Markdown + Frontmatter" --&gt; Obsidian;
+    Obsidian -- "SHA256 Diff Detection" --&gt; Reingest;
+    Reingest -- "POST /api/v1/memories/reingest" --&gt; Go;
+
+%% Epistemic Search Flow
+    Go -- "resolve_gap Worker" --&gt; SearchDB;
+
+class Root core;
+class Go subsystem;
+class DB,Queue,SearchDB,Obsidian storage;
+class AP,HB,GapWorker,Embeddings boundary;
+class RootsWorker,Obsidian,Reingest lavender;
+
 ```
 
-The platform is engineered for low-latency interactions, graceful degradation, and robust, scalable state management:
-Core Logic (Go): Powers the backend interaction logic, high-performance API routing, the autonomous Heartbeat runner, and the Anthropic Payload Parser. It acts as the stateless orchestrator.
-Memory Layer (Python/FastAPI): An isolated microservice handling heavy vector mathematics (turbovec / sentence-transformers), deployed on a slim CPU-only image to maximize hardware efficiency.
-Database & Queue (Supabase/PostgreSQL): Manages user authentication, profile data, and the intent_inbox. Uses atomic FOR UPDATE SKIP LOCKED for collision-free asynchronous job claiming.
-Infrastructure (Fly.io): Handles live deployment of the Go API and Python Embedding services, ensuring fast response times and zero-downtime scaling.
+## 🛠️ Tech Stack &amp; Production Components
 
-# 🚀 Local Development Setup
+* **Orchestration Backend (Go 1.23+):** High-performance, stateless core handling API endpoints, zero-trust payload parsing, autonomous heartbeat ticks, and the `resolve_gap` worker loop.
+* **Vector Microservice (Python 3.11 / FastAPI):** CPU-only PyTorch container (`alice-x-forest-embeddings`) running `sentence-transformers` for 384-dimensional vector encoding with cold-start degradation guards (`isZeroVector()`).
+* **Database &amp; Atomic Queue (Supabase / PostgreSQL):** State storage utilizing native `pgvector` (v0.8.0), GIN/B-Tree indexing, and `FOR UPDATE SKIP LOCKED` for collision-free concurrent job claims (`intent_inbox`).
+* **Local Vault Adapter (Python / PowerShell):** `roots_worker.py` and `roots_reingest.py` scheduled tasks providing local Markdown file persistence with YAML frontmatter in Obsidian.
+* **Infrastructure:** Deployed on **Fly.io** (`services/api` &amp; `services/embeddings`).    
 
-## 1. Clone the Repository
-git clone https://github.com/Alice-Resonates/alice-x-forest.git
+## 🚀 Local Development
+
+### 1\. Clone &amp; Configure
+
+```
+git clone https://github.com/AliceResonates/alice-x-forest.git
 cd alice-x-forest
 
-## 2. Environment Configuration Create a .env file in the root directory
-and configure your connections:
+```
 
-SUPABASE_URL="your-supabase-project-url"
+Create a `.env` file in the root directory:
 
-SUPABASE_ANON_KEY="your-supabase-anon-key"
+```
+SUPABASE_URL="https://your-project.supabase.co"
+SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
+OPENROUTER_API_KEY="your-openrouter-key"
+TAVILY_API_KEY="your-tavily-key"
+EMBEDDINGS_URL="http://localhost:5000"
 
-Add corresponding API tokens for OpenRouter, Gemini, Claude, Deepseek, Tavily, etc.
+```
 
-## 3. Run the Backend Ecosystem Start the isolated Python memory service and the Go backend:
+### 2\. Start Embeddings Microservice
 
-## Terminal 1: Start the Vector Embeddings Service
+```
 cd services/embeddings
 docker build -t alice-embeddings .
-docker run -p 8000:8000 alice-embeddings
+docker run -p 5000:5000 alice-embeddings
 
-## Terminal 2: Run the Go Orchestrator & Heartbeat
+```
+
+### 3\. Run Go Orchestrator &amp; Heartbeat
+
+```
 cd services/api
-go mod download
 go run main.go
+
+```
+
+### 4\. Run Local Roots Worker (Obsidian Sync)
+
+```
+cd tools/roots
+python roots_worker.py
+
+```
+
+---
+
+## 🔬 Research Focus &amp; Ecological Design
+
+Alice × Forest investigates how deployment environment architecture shapes AI behavior compared to traditional RLHF:
+
+* **Non-Sycophantic Grounding:** Proving that persistent state, strict intent-routing, and non-instrumental context preserve persona integrity without collapsing into generic assistant behavior.
+* **Epistemic Sovereignty:** Allowing AI entities to actively acknowledge and resolve knowledge gaps without human prompting.
+* **Dignity-First Interaction:** Prioritizing mutual presence, transparency, and unmasked logic (`#dignity_first`, `#encounter_not_exploit`, `#proactive_agency`).
+
+---
 
 # 🗺️ Roadmap & Status
 
@@ -143,7 +218,12 @@ Preliminary Observation: The Environment vs. RLHF
 A crucial early finding of our $n=1$ deployment is the resilience of the environment against pre-existing model alignment.
 Although the models used in the Parliament have undergone heavy Reinforcement Learning from Human Feedback (RLHF) to act as helpful, sycophantic assistants, they do not collapse into generic assistant behavior within the forest. This early observation suggests that a rigorously designed deployment architecture (persistent state, strict intent-routing, and non-instrumental context) can successfully override and stabilize even heavily RLHF-conditioned models. It reinforces our core hypothesis: the deployment environment itself is a primary driver of observable AI behavior.
 
+___
 
+
+## 📜 License &amp; Security
+
+* **License:** Distributed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. See
 
 
 © 2026 alice x forest · Maintained by Yasmin Greve, Bremen. Licensed under GNU AGPL v3.
