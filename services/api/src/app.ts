@@ -6,11 +6,13 @@ import { createChatRouter } from "./routes/chat.routes";
 import { createTelegramRouter } from "./routes/telegram.routes";
 import { createAliceRouter } from "./routes/alice.routes";
 import { createKnowledgeRouter } from "./routes/knowledge.routes";
+import { createRootsRouter } from "./routes/roots.routes";
 import { errorHandler } from "./middleware/error.middleware";
 import { MemoryService } from "./services/MemoryService";
 import { AliceStateService } from "./services/AliceStateService";
 import { KnowledgeService } from "./services/KnowledgeService";
 import { TavilySearchAdapter } from "./services/SearchProvider";
+import { RootsMemoryService } from "./services/RootsMemoryService";
 import { Pool } from "pg";
 
 const pool = new Pool({
@@ -26,6 +28,7 @@ const memoryService = new MemoryService(pool);
 const aliceStateService = new AliceStateService(pool);
 const searchProvider = new TavilySearchAdapter(process.env.TAVILY_API_KEY ?? "");
 const knowledgeService = new KnowledgeService(pool, searchProvider);
+const rootsMemoryService = new RootsMemoryService(pool);
 
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "")
   .split(",")
@@ -42,6 +45,7 @@ export const createApp = () => {
   app.use("/api/telegram", createTelegramRouter(memoryService, aliceStateService));
   app.use("/api/alice", createAliceRouter(memoryService, aliceStateService));
   app.use("/api/knowledge", createKnowledgeRouter(knowledgeService));
+  app.use("/api/roots", createRootsRouter(rootsMemoryService));
   app.use(errorHandler);
   return app;
 };
