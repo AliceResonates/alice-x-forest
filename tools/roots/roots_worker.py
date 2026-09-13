@@ -161,7 +161,10 @@ def mark(sb, intent_id: str, status: str, error: str | None = None,
     """status-Werte der echten intent_inbox: pending|processing|done|failed."""
     patch = {"status": status, "last_error": error}
     if status in ("done", "failed"):
-        patch["processed_at"] = datetime.now(timezone.utc).isoformat()
+        # "now" statt einem lokal berechneten Zeitstempel: Postgres' spezieller
+        # Datums-Literal wird erst beim Ausfuehren des UPDATE serverseitig
+        # aufgeloest -- Wald-Zeit, nicht SirCaylebs (leicht abweichende) Uhr.
+        patch["processed_at"] = "now"
     if retry_in_seconds is not None:
         patch["next_attempt_at"] = datetime.fromtimestamp(
             time.time() + retry_in_seconds, tz=timezone.utc
