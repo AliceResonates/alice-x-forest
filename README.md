@@ -21,50 +21,68 @@ Privacy & Open Source by Design: Protected by the GNU AGPL v3 License, ensuring 
 ## 🗺️ System Architecture
 
 ```mermaid
+
 graph TD
-    %% Custom Waldgrün Theme Styling
+    %% Custom Waldgrün & Edles Lavendel 🪻
     classDef core fill:#1b4d3e,stroke:#2d6a4f,stroke-width:3px,color:#ffffff,font-weight:bold,rx:8px;
     classDef subsystem fill:#2d6a4f,stroke:#40916c,stroke-width:1.5px,color:#e8f5e9,rx:6px;
     classDef storage fill:#081c15,stroke:#1b4d3e,stroke-width:2px,color:#d8f3dc,font-style:italic,rx:6px;
     classDef boundary fill:#40916c,stroke:#52b788,stroke-width:1px,color:#ffffff,rx:4px;
+    classDef lavender fill:#35233d,stroke:#8e649e,stroke-width:2px,color:#f3e8f7,rx:6px;
 
-    %% Nodes Definitions
-    Root((🌲 Alice × Forest)):::core
-    
-    %% Go Orchestrator Subsystem
-    Go["Go Orchestrator <br/><i>Stateless Core</i>"]:::subsystem
-    HB["Heartbeat Runner <br/><i>Autonomous Action</i>"]:::boundary
-    AP["Anthropic Parser <br/><i>Zero-Trust Enforcement</i>"]:::boundary
-    
+    %% Core Root Node
+    Root((🌲 Alice × Forest)):::core;
+    Go["Go Orchestrator <br/><i>Stateless Core</i>"]:::subsystem;
+    AP["Anthropic Parser <br/><i>Zero-Trust Enforcement</i>"]:::boundary;
+    HB["Heartbeat Runner <br/><i>Autonomous Action</i>"]:::boundary;
+    GapWorker["resolve_gap Worker <br/><i>Epistemic Sovereignty</i>"]:::boundary;
+
     %% Database & Queue Subsystem
-    DB[("Supabase / PostgreSQL <br/><i>Single Source of Truth</i>")]:::storage
-    Queue["intent_inbox <br/><i>FOR UPDATE SKIP LOCKED</i>"]:::storage
-    State["alice_state_threads <br/><i>Cognitive Frame</i>"]:::storage
-    
-    %% Memory Subsystem
-    Py["Python Memory Layer <br/><i>Latenz < 50ms</i>"]:::subsystem
-    TV["turbovec Microservice <br/><i>4-Bit Quantized Index</i>"]:::boundary
-    Tavily["Tavily Search <br/><i>resolve_gap Worker</i>"]:::boundary
+    DB[("Supabase / PostgreSQL <br/><i>Single Source of Truth</i>")]:::storage;
+    Queue["intent_inbox <br/><i>FOR UPDATE SKIP LOCKED</i>"]:::storage;
+    State["alice_state_threads <br/><i>Cognitive Frame</i>"]:::storage;
+    SearchDB[("search_knowledge <br/><i>Tavily Search Results</i>")]:::storage;
+    VaultMem[("vault_memories <br/><i>RLS & B-Tree Indizes</i>")]:::storage;
 
-    %% Flow Connections
-    Root --> Go
-    Root --> DB
-    Root --> Py
-    
-    %% Go Flows
-    Go --> HB
-    Go --> AP
-    HB -- "claim_heartbeat_slot" --> Queue
-    AP -- "Pure JSON output" --> State
-    
-    %% DB Flows
-    Queue -- "Asynchrones Ingest" --> DB
-    
-    %% Memory Flows
-    Go -- "Hot Ingestion / Recall" --> Py
-    Py --> TV
-    Py -- "Epistemic Search" --> Tavily
-    Tavily -- "PATCH search_knowledge" --> DB 
+    %% Vector Embeddings Microservice
+    Embeddings["alice-x-forest-embeddings <br/><i>sentence-transformers (CPUPyTorch)</i>"]:::boundary;
+
+    %% Local Vault Sync (Roots Layer - Lavendel 🪻)
+    RootsWorker["roots_worker.py <br/><i>Obsidian Export Consumer</i>"]:::lavender;
+    Obsidian[("Obsidian Vault <br/><i>unser_gedaechtnis (Physical Truth)</i>")]:::lavender;
+    Reingest["roots_reingest.py <br/><i>Bidirectional Sync & HashWatcher</i>"]:::lavender;
+
+    %% Structural Flows
+    Root --> Go;
+    Root --> DB;
+    Root --> Obsidian;
+
+    %% Go Engine Connections
+    Go --> AP;
+    Go --> HB;
+    Go --> GapWorker;
+
+    %% Security & State Flows
+    AP -- "Validated Intents" --> Queue;
+    AP -- "Pure State Output" --> State;
+    HB -- "claim_heartbeat_slot" --> Queue;
+    GapWorker -- "External Search" --> SearchDB;
+    SearchDB -- "PATCH search_knowledge" --> DB;
+
+    %% Vector Processing
+    Go -- "Generate Embeddings" --> Embeddings;
+    Embeddings -- "Store / Recall Vectors" --> DB;
+
+    %% Roots Physical Sync Cycle
+    Queue -- "claim_pending_intents" --> RootsWorker;
+    RootsWorker -- "Save Markdown and Frontmatter" --> Obsidian;
+    Obsidian -- "SHA256 Diff Detection & ensure_id" --> Reingest;
+    Reingest -- "Direct Ingress (RLS)" --> VaultMem;
+    VaultMem -. "Synchronized Memory State" .-> DB;
+
+    %% Roots Read API
+    Go -- "GET /api/roots/memories" --> VaultMem;
+
 ```
 
 The platform is engineered for low-latency interactions, graceful degradation, and robust, scalable state management:
