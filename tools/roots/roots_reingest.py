@@ -121,6 +121,9 @@ def build_payload(fm: dict, body: str, content_hash: str) -> dict:
     return payload
 
 
+_dry_run_seen: set[str] = set()
+
+
 def sync_once(vault: str, cache_path: str, url: str, dry_run: bool) -> tuple[int, int, int]:
     """Ein Scan-Durchlauf. Gibt (gesendet, übersprungen, fehlgeschlagen) zurück."""
     cache = load_cache(cache_path)
@@ -148,7 +151,10 @@ def sync_once(vault: str, cache_path: str, url: str, dry_run: bool) -> tuple[int
         payload = build_payload(fm, body, content_hash)
 
         if dry_run:
-            log.info("[dry-run] würde senden: %s (id=%s)", rel_path, payload["id"])
+            cache_key = f"{rel_path}:{content_hash}"
+            if cache_key not in _dry_run_seen:
+                log.info("[dry-run] würde senden: %s (id=%s)", rel_path, payload["id"])
+                _dry_run_seen.add(cache_key)
             sent += 1
             continue
 
