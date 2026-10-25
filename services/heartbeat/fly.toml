@@ -1,8 +1,9 @@
 # fly.toml app configuration file for alice-x-forest-heartbeat
 #
-# Reiner Hintergrund-Worker, kein HTTP-Server: pollt alle 2 Minuten auf
-# einen offenen heartbeat_slot (siehe heartbeat.Runner). Läuft dauerhaft,
-# deshalb bewusst kein [http_service] und kein auto-stop.
+# Hintergrund-Worker + Reingest-HTTP-Endpunkt.  Pollt alle 2 Minuten auf
+# offene heartbeat_slots (heartbeat.Runner) und nimmt per HTTP geaenderte
+# Vault-Dateien vom Reingest-Scanner entgegen (roots_reingest.py → POST
+# /api/v1/memories/reingest).  Laeuft dauerhaft, kein auto-stop.
 app = 'alice-x-forest-heartbeat'
 primary_region = 'iad'
 

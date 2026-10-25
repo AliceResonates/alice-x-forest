@@ -46,6 +46,7 @@ from roots_common import (
 VAULT_PATH = os.environ.get("ROOTS_VAULT", "./unser_gedaechtnis")
 CACHE_PATH = os.environ.get("ROOTS_CACHE", os.path.join(VAULT_PATH, ".reingest_cache.json"))
 REINGEST_URL = os.environ.get("ROOTS_REINGEST_URL", "")
+REINGEST_TOKEN = os.environ.get("REINGEST_TOKEN", "")
 POLL_SECONDS = int(os.environ.get("ROOTS_POLL_SECONDS", "10"))
 
 log = logging.getLogger("roots_reingest")
@@ -121,6 +122,9 @@ def build_payload(fm: dict, body: str, content_hash: str) -> dict:
     return payload
 
 
+_dry_run_seen: set[str] = set()
+
+
 def sync_once(vault: str, cache_path: str, url: str, dry_run: bool) -> tuple[int, int, int]:
     """Ein Scan-Durchlauf. Gibt (gesendet, übersprungen, fehlgeschlagen) zurück."""
     cache = load_cache(cache_path)
@@ -148,7 +152,10 @@ def sync_once(vault: str, cache_path: str, url: str, dry_run: bool) -> tuple[int
         payload = build_payload(fm, body, content_hash)
 
         if dry_run:
-            log.info("[dry-run] würde senden: %s (id=%s)", rel_path, payload["id"])
+            cache_key = f"{rel_path}:{content_hash}"
+            if cache_key not in _dry_run_seen:
+                log.info("[dry-run] würde senden: %s (id=%s)", rel_path, payload["id"])
+                _dry_run_seen.add(cache_key)
             sent += 1
             continue
 
@@ -158,7 +165,8 @@ def sync_once(vault: str, cache_path: str, url: str, dry_run: bool) -> tuple[int
             continue
 
         try:
-            resp = requests.post(url, json=payload, timeout=15)
+            headers = {"Authorization": f"Bearer {REINGEST_TOKEN}"} if REINGEST_TOKEN else {}
+            resp = requests.post(url, json=payload, headers=headers, timeout=15)
             resp.raise_for_status()
         except requests.RequestException as e:
             log.warning(

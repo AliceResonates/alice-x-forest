@@ -4,15 +4,18 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/AliceResonates/alice-x-forest/services/heartbeat/heartbeat"
 	"github.com/AliceResonates/alice-x-forest/services/heartbeat/openrouter"
+	"github.com/AliceResonates/alice-x-forest/services/heartbeat/reingest"
 	"github.com/AliceResonates/alice-x-forest/services/heartbeat/resolvegap"
 )
 
@@ -84,8 +87,28 @@ func main() {
 	knowledgeURL := getEnv("KNOWLEDGE_API_URL", "https://alice-x-forest-api.fly.dev")
 	gapWorker := resolvegap.New(pool, knowledgeURL, log)
 
-	log.Info("heartbeat service startet", "model", model, "knowledge_api_url", knowledgeURL)
+	reingestPort := getEnv("REINGEST_PORT", "8090")
+	reingestToken := os.Getenv("REINGEST_TOKEN")
+	rh := reingest.NewHandler(pool, log, reingestToken)
+	mux := http.NewServeMux()
+	mux.Handle("/api/v1/memories/reingest", rh)
+	mux.HandleFunc("/health", func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("ok"))
+	})
+	srv := &http.Server{Addr: ":" + reingestPort, Handler: mux}
+
+	log.Info("heartbeat service startet", "model", model, "knowledge_api_url", knowledgeURL, "reingest_port", reingestPort)
 	go r.Run(ctx)
 	go gapWorker.Run(ctx)
+	go func() {
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Error("reingest-server fehlgeschlagen", "err", err)
+		}
+	}()
+
 	<-ctx.Done()
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	srv.Shutdown(shutdownCtx)
 }
