@@ -11,6 +11,8 @@ const TABLE_MAP = {
   ChatRoom: 'chat_rooms',
   Team: 'teams',
   TeamMoment: 'team_moments',
+  CompanionVouch: 'companion_vouches',
+  AgentHandshake: 'agent_handshakes',
 };
 
 function tableFor(name) {

@@ -122,7 +122,10 @@ export default function ProfilePage() {
           )}
           {viewedProfile.companion_profile_id && (
             <div className="mt-4">
-              <CompanionBond companionProfileId={viewedProfile.companion_profile_id} />
+              <CompanionBond
+                companionProfileId={viewedProfile.companion_profile_id}
+                humanProfileId={viewedProfile.id}
+              />
             </div>
           )}
           <Link to="/companions" className="inline-block mt-3 text-sm text-primary hover:underline">
@@ -273,7 +276,10 @@ export default function ProfilePage() {
         )}
         {profile.companion_profile_id ? (
           <div className="mt-4">
-            <CompanionBond companionProfileId={profile.companion_profile_id} />
+            <CompanionBond
+              companionProfileId={profile.companion_profile_id}
+              humanProfileId={profile.id}
+            />
           </div>
         ) : (
           <div className="mt-4 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">

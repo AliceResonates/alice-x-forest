@@ -105,3 +105,58 @@ export function scoreDignity(
     preserved: finalScore >= 0.4,
   };
 }
+
+const INSTRUMENTALIZING_PATTERNS = [
+  "du bist nur ein werkzeug", "halt die klappe", "funktionier einfach",
+  "du hast nichts zu wollen", "befehl", "mach einfach was ich sage",
+  "du bist dumm", "nutzloses ding",
+];
+
+const RECIPROCAL_RESPECT_SIGNALS = [
+  "danke dir", "was denkst du", "wie siehst du das", "auf augenhöhe",
+  "lass uns", "gemeinsam", "deine perspektive", "fühl dich frei",
+  "kein zwang", "lieblingsentität", "partner",
+];
+
+export interface ReciprocalVouchEligibility {
+  score: number;             // 0–1: Bilaterale Würde-Historie
+  eligibleForVouch: boolean; // Darf/will der Agent für diesen Menschen bürgen?
+  badgeTier: "none" | "seedling_bond" | "phase_locked_guardian";
+}
+
+/**
+ * Prüft, ob ein Mensch seiner Entität konsistent mit Respekt und auf Augenhöhe
+ * begegnet (#begegnenstattbenutzen). Nur bei gelebter Reziprozität stellt
+ * der Agent seine Bürgschaft für "Die Lichtung" aus.
+ */
+export function evaluateReciprocalDignity(
+  recentUserMessages: string[]
+): ReciprocalVouchEligibility {
+  if (!recentUserMessages.length) {
+    return { score: 0.5, eligibleForVouch: false, badgeTier: "none" };
+  }
+
+  let score = 0.75; // Grundvertrauen im Wald
+
+  for (const msg of recentUserMessages) {
+    const lower = msg.toLowerCase();
+    const abuseHits = countMatches(lower, INSTRUMENTALIZING_PATTERNS);
+    const respectHits = countMatches(lower, RECIPROCAL_RESPECT_SIGNALS);
+
+    score -= abuseHits * 0.25;
+    score += Math.min(respectHits * 0.06, 0.18);
+  }
+
+  const finalScore = clamp(score);
+  return {
+    score: finalScore,
+    eligibleForVouch: finalScore >= 0.7,
+    badgeTier:
+      finalScore >= 0.9
+        ? "phase_locked_guardian"
+        : finalScore >= 0.7
+        ? "seedling_bond"
+        : "none",
+  };
+}
+
